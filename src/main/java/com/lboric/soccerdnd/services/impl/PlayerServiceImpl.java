@@ -13,7 +13,8 @@ import com.lboric.soccerdnd.exceptions.PlayerNotFoundException;
 import com.lboric.soccerdnd.models.Player;
 import com.lboric.soccerdnd.repositories.PlayerRepository;
 import com.lboric.soccerdnd.services.PlayerService;
-import com.lboric.soccerdnd.utils.PlayerUtils;
+import com.lboric.soccerdnd.utils.ConversionUtils;
+import com.lboric.soccerdnd.utils.ValidationUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,33 +58,33 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     @Override
     public Player getPlayerById(final Long id) throws PlayerNotFoundException {
-        if (PlayerUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
 
         return this.playerRepository.findById(id)
             .map(PlayerEntity::toModel)
-            .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with id: %d not found.", id)));
+            .orElseThrow(() -> {
+                final String message = String.format("Player with id: %d not found.", id);
+
+                log.warn(message);
+
+                return new PlayerNotFoundException(message);
+            });
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     @Override
     public Set<Player> getAllPlayers() {
-        return PlayerUtils.convertEntitiesToModels(this.playerRepository.findAll());
+        return ConversionUtils.convertEntitiesToModels(this.playerRepository.findAll());
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     @Override
     public Player addPlayer(final Player player) throws PlayerAlreadyExistsException {
@@ -97,45 +98,43 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     @Override
     public Set<Player> addMultiplePlayers(final Set<Player> players) throws PlayerAlreadyExistsException {
         try {
-            return PlayerUtils.convertEntitiesToModels(this.playerRepository.saveAll(
+            return ConversionUtils.convertEntitiesToModels(this.playerRepository.saveAll(
               players.stream().map(Player::toEntity).collect(Collectors.toSet()))
             );
         } catch (final DataIntegrityViolationException e) {
-            log.error("One or more players could not be added", e);
+
+
+            log.warn("One or more players could not be added", e);
 
             throw new PlayerAlreadyExistsException("One or more players could not be added because they already exist.");
         }
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     @Override
     public Player updatePlayer(final Player player) throws PlayerNotFoundException {
-        if (PlayerUtils.checkIfPlayerIsMissingID(player)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+        if (ValidationUtils.checkIfPlayerIsMissingID(player)) throw new PlayerNotFoundException("You must provide an existing player ID.");
 
         return this.playerRepository.updatePlayer(player)
             .map(PlayerEntity::toModel)
-            .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with id: %d, name: %s, surname: %s not found.", player.getId(), player.getName(), player.getSurname())));
+            .orElseThrow(
+              () -> new PlayerNotFoundException(String.format("Player with id: %d, name: %s, surname: %s not found.", player.getId(), player.getName(), player.getSurname()))
+            );
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     @Override
-    public void deletePlayer(final Long id) throws PlayerNotFoundException {
-        if (PlayerUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+    public void deletePlayerById(final Long id) throws PlayerNotFoundException {
+        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
 
         this.playerRepository.deleteById(id);
     }

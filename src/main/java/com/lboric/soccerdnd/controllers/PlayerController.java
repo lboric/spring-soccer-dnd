@@ -72,7 +72,7 @@ public class PlayerController {
 
     @DeleteMapping("/delete-player/{id}")
     void deletePlayer(@NonNull @PathVariable final Long id) {
-        this.playerService.deletePlayer(id);
+        this.playerService.deletePlayerById(id);
     }
 
 }

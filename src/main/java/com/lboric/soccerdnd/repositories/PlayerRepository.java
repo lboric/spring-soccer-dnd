@@ -13,8 +13,8 @@ import com.lboric.soccerdnd.models.Player;
 @Repository
 public interface PlayerRepository extends CrudRepository<PlayerEntity, Long> {
 
-    @Modifying
     @Transactional
+    @Modifying
     default Optional<PlayerEntity> updatePlayer(final Player updatedPlayer) {
         return Optional.ofNullable(updatedPlayer.getId())
             .flatMap(this::findById)
