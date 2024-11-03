@@ -13,10 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "PLAYER_STATS", uniqueConstraints = @UniqueConstraint(columnNames = {"PLAYER_ID", "SEASON_YEAR"}))
 public class PlayerStatsEntity {
 
