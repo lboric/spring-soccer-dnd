@@ -61,6 +61,6 @@ public interface PlayerService {
      * @param id the unique identifier of the player to be deleted
      * @throws PlayerNotFoundException if no player is found with the specified id
      */
-    void deletePlayer(Long id);
+    void deletePlayerById(Long id);
 
 }

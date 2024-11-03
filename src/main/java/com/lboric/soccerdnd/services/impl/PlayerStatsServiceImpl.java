@@ -11,7 +11,7 @@ import com.lboric.soccerdnd.exceptions.PlayerNotFoundException;
 import com.lboric.soccerdnd.models.PlayerStats;
 import com.lboric.soccerdnd.repositories.PlayerStatsRepository;
 import com.lboric.soccerdnd.services.PlayerStatsService;
-import com.lboric.soccerdnd.utils.PlayerUtils;
+import com.lboric.soccerdnd.utils.ValidationUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
 
     @Override
     public PlayerStats getPlayerStatsById(final Long id) throws PlayerNotFoundException {
-        if (PlayerUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
 
         return this.playerStatsRepository.findPlayerStatsById(id).map(PlayerStatsDTO::toModel)
         .orElseThrow(() -> {
