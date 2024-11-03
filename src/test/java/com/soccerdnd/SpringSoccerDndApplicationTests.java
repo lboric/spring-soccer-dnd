@@ -1,4 +1,4 @@
-package com.soccerdnd.spring_soccer_dnd;
+package com.soccerdnd;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
