@@ -41,7 +41,7 @@ class PlayerControllerTest {
         this.mockMvc.perform(get("/api/players/" + nonExistingId))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andExpect(content().string(containsString("Player with ID: " + nonExistingId + " not found.")));
+            .andExpect(content().string(containsString("Player with id: " + nonExistingId + " not found.")));
     }
 
 }

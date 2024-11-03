@@ -9,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "PLAYER_STATS", uniqueConstraints = @UniqueConstraint(columnNames = {"PLAYER_ID", "SEASON_YEAR"}))
+@Table(name = "player_stats", uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "season_year"}))
 public class PlayerStatsEntity {
 
     @Id
@@ -26,13 +25,13 @@ public class PlayerStatsEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "PLAYER_ID")
+    @JoinColumn(name = "player_id")
     private PlayerEntity player;
 
-    @Column(name = "SEASON_YEAR", nullable = false)
+    @Column(name = "season_year")
     private int seasonYear;
 
-    @Column(name = "NUMBER_OF_GOALS", nullable = false)
+    @Column(name = "number_of_goals")
     private int numberOfGoals;
 
 }

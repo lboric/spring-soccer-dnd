@@ -63,12 +63,11 @@ public class PlayerServiceImpl implements PlayerService {
      */
     @Override
     public Player getPlayerById(final Long id) throws PlayerNotFoundException {
-        if (PlayerUtils.checkIfPlayerIsMissingID(id))
-            throw new PlayerNotFoundException("You must provide an existing player ID.");
+        if (PlayerUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
 
         return this.playerRepository.findById(id)
             .map(PlayerEntity::toModel)
-            .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with ID: %d not found.", id)));
+            .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with id: %d not found.", id)));
     }
 
     /**
@@ -93,7 +92,7 @@ public class PlayerServiceImpl implements PlayerService {
         } catch (final DataIntegrityViolationException e) {
             log.error("Player {} {} already exists", player.getName(), player.getSurname(), e);
 
-            throw new PlayerAlreadyExistsException(String.format("Player with NAME: %s and SURNAME: %s already exists.", player.getName(), player.getSurname()));
+            throw new PlayerAlreadyExistsException(String.format("Player with name: %s and surname: %s already exists.", player.getName(), player.getSurname()));
         }
     }
 
@@ -126,7 +125,7 @@ public class PlayerServiceImpl implements PlayerService {
 
         return this.playerRepository.updatePlayer(player)
             .map(PlayerEntity::toModel)
-            .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with ID: %d, NAME: %s, SURNAME: %s not found.", player.getId(), player.getName(), player.getSurname())));
+            .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with id: %d, name: %s, surname: %s not found.", player.getId(), player.getName(), player.getSurname())));
     }
 
     /**
