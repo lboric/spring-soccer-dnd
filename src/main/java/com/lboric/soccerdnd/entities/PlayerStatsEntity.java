@@ -31,6 +31,7 @@ public class PlayerStatsEntity {
     @Column(name = "SEASON_YEAR", nullable = false)
     private int seasonYear;
 
+    @Column(name = "NUMBER_OF_GOALS", nullable = false)
     private int numberOfGoals;
 
 }

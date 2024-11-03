@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +44,6 @@ public class PlayerController {
         return ResponseEntity.ok(playerDTOs);
     }
 
-    /**
-     * Retrieves the name of a player based on their unique ID.
-     *
-     * @param id the unique identifier of the player
-     * @return the name of the player as a String
-     */
     @GetMapping("/{id}")
     ResponseEntity<PlayerDTO> getPlayerById(@NonNull @PathVariable final Long id) {
         final PlayerDTO playerDTO = this.playerService.getPlayerById(id).toDTO();
@@ -73,6 +68,11 @@ public class PlayerController {
         final PlayerDTO resultPlayerDTO = this.playerService.updatePlayer(playerDTO.toModel()).toDTO();
 
         return ResponseEntity.ok(resultPlayerDTO);
+    }
+
+    @DeleteMapping("/delete-player/{id}")
+    void deletePlayer(@NonNull @PathVariable final Long id) {
+        this.playerService.deletePlayer(id);
     }
 
 }
