@@ -15,10 +15,16 @@ public class PlayerStats {
 
     private long id;
 
+    private String name;
+
+    private String surname;
+
+    private int seasonYear;
+
     private int numberOfGoals;
 
     public PlayerStatsDTO toDTO() {
-        return new PlayerStatsDTO(this.id, this.numberOfGoals);
+        return new PlayerStatsDTO(this.id, this.name, this.surname, this.seasonYear, this.numberOfGoals);
     }
 
 }

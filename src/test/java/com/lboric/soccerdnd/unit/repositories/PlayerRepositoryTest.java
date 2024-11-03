@@ -33,14 +33,14 @@ class PlayerRepositoryTest {
     @Rollback(false)
     @DisplayName("GIVEN a new player, WHEN saved, THEN it should be persisted correctly")
     void testSavePlayer() {
-        final PlayerEntity playerEntity = new PlayerEntity(null, "Neymar", "Jr");
+        final PlayerEntity playerEntity = new PlayerEntity(null, "test", "player4");
         final PlayerEntity savedPlayer = this.playerRepository.save(playerEntity);
 
         assertAll(
           () -> assertThat(savedPlayer).isNotNull(),
           () -> assertThat(savedPlayer.getId()).isEqualTo(4L),
-          () -> assertThat(savedPlayer.getName()).isEqualTo("Neymar"),
-          () -> assertThat(savedPlayer.getSurname()).isEqualTo("Jr")
+          () -> assertThat(savedPlayer.getName()).isEqualTo("test"),
+          () -> assertThat(savedPlayer.getSurname()).isEqualTo("player4")
         );
     }
 
@@ -54,8 +54,8 @@ class PlayerRepositoryTest {
         assertAll(
           () -> assertThat(player).isPresent(),
           () -> assertThat(player.get().getId()).isEqualTo(playerId),
-          () -> assertThat(player.get().getName()).isEqualTo("Neymar"),
-          () -> assertThat(player.get().getSurname()).isEqualTo("Jr")
+          () -> assertThat(player.get().getName()).isEqualTo("test"),
+          () -> assertThat(player.get().getSurname()).isEqualTo("player4")
         );
     }
 

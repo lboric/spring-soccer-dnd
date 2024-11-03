@@ -1,3 +1,11 @@
 package com.lboric.soccerdnd.services;
 
-public interface PlayerStatsService {}
+import java.util.Set;
+
+import com.lboric.soccerdnd.models.PlayerStats;
+
+public interface PlayerStatsService {
+
+    Set<PlayerStats> getAllPlayersStats();
+
+}

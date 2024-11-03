@@ -6,4 +6,5 @@ public class PlayerNotFoundException extends EntityNotFoundException {
     public PlayerNotFoundException(final String message) {
         super(message);
     }
+
 }

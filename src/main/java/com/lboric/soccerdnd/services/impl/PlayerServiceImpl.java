@@ -27,7 +27,7 @@ public class PlayerServiceImpl implements PlayerService {
      * {@inheritDoc}
      */
     @Override
-    public Player getPlayer(final long id) throws PlayerNotFoundException {
+    public Player getPlayerById(final long id) throws PlayerNotFoundException {
         return this.playerRepository.findById(id)
             .map(PlayerEntity::toModel)
             .orElseThrow(() -> new PlayerNotFoundException("Player not found with ID: " + id));

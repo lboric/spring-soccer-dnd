@@ -31,9 +31,9 @@ class PlayerServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("providePlayerIds")
-    @DisplayName("GIVEN an existing player ID, WHEN playerService.getPlayer is called, THEN it should return the correct player")
+    @DisplayName("GIVEN an existing player ID, WHEN playerService.getPlayerById is called, THEN it should return the correct player")
     void testGetPlayer(final long id, final String expectedName, final String expectedSurname) {
-        final Player player = this.playerService.getPlayer(id);
+        final Player player = this.playerService.getPlayerById(id);
 
         assertAll(
           () -> assertNotNull(player, "Player object should not be null"),
@@ -44,18 +44,18 @@ class PlayerServiceImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN a non-existent player ID, WHEN playerService.getPlayer is called, THEN it should throw PlayerNotFoundException")
+    @DisplayName("GIVEN a non-existent player ID, WHEN playerService.getPlayerById is called, THEN it should throw PlayerNotFoundException")
     void testGetNonExistentPlayer() {
         final long nonExistingPlayerId = 4L;
 
-        assertThrows(PlayerNotFoundException.class, () -> this.playerService.getPlayer(nonExistingPlayerId));
+        assertThrows(PlayerNotFoundException.class, () -> this.playerService.getPlayerById(nonExistingPlayerId));
     }
 
     private static Stream<Arguments> providePlayerIds() {
         return Stream.of(
-          Arguments.of(1L, "Luka", "Boric"),
-          Arguments.of(2L, "Cristiano", "Ronaldo"),
-          Arguments.of(3L, "Lionel", "Messi")
+          Arguments.of(1L, "test", "player1"),
+          Arguments.of(2L, "test", "player2"),
+          Arguments.of(3L, "test", "player3")
         );
     }
 

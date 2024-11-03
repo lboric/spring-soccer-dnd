@@ -30,7 +30,7 @@ class PlayerControllerTest {
         this.mockMvc.perform(get("/api/players/1"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().string(containsString("{\"id\":1,\"name\":\"Luka\",\"surname\":\"Boric\"}")));
+            .andExpect(content().string(containsString("{\"id\":1,\"name\":\"test\",\"surname\":\"player1\"}")));
     }
 
     @Test

@@ -1,7 +1,5 @@
 package com.lboric.soccerdnd.entities;
 
-import com.lboric.soccerdnd.models.PlayerStats;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,11 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "PLAYER_STATS")
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"PLAYER_ID", "SEASON_YEAR"}))
+@Table(name = "PLAYER_STATS", uniqueConstraints = @UniqueConstraint(columnNames = {"PLAYER_ID", "SEASON_YEAR"}))
 public class PlayerStatsEntity {
 
     @Id
@@ -34,12 +32,5 @@ public class PlayerStatsEntity {
     private int seasonYear;
 
     private int numberOfGoals;
-
-    public PlayerStats toModel() {
-        return PlayerStats.builder()
-            .id(this.id)
-            .numberOfGoals(this.numberOfGoals)
-            .build();
-    }
 
 }

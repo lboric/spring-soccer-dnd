@@ -20,7 +20,7 @@ import com.lboric.soccerdnd.models.Player;
 import com.lboric.soccerdnd.services.PlayerService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/players")
 public class PlayerController {
 
     private final PlayerService playerService;
@@ -30,26 +30,27 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
+    @GetMapping
+    ResponseEntity<SortedSet<PlayerDTO>> getPlayers() {
+        final SortedSet<PlayerDTO> playerDTOs = this.playerService.getAllPlayers()
+            .stream()
+            .map(Player::toDTO)
+            .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparingLong(PlayerDTO::id))));
+
+        return ResponseEntity.ok(playerDTOs);
+    }
+
     /**
      * Retrieves the name of a player based on their unique ID.
      *
      * @param id the unique identifier of the player
      * @return the name of the player as a String
      */
-    @GetMapping("/players/{id}")
-    ResponseEntity<PlayerDTO> getPlayer(@PathVariable final Long id) {
-        final PlayerDTO playerDTO = this.playerService.getPlayer(id).toDTO();
+    @GetMapping("/{id}")
+    ResponseEntity<PlayerDTO> getPlayerById(@PathVariable final Long id) {
+        final PlayerDTO playerDTO = this.playerService.getPlayerById(id).toDTO();
 
         return ResponseEntity.ok(playerDTO);
-    }
-
-    @GetMapping("/players")
-    ResponseEntity<SortedSet<PlayerDTO>> getPlayers() {
-        final SortedSet<PlayerDTO> playerDTOs = this.playerService.getAllPlayers().stream()
-            .map(Player::toDTO)
-            .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparingLong(PlayerDTO::id))));
-
-        return ResponseEntity.ok(playerDTOs);
     }
 
     @ExceptionHandler(PlayerNotFoundException.class)

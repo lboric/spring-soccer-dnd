@@ -12,7 +12,7 @@ public interface PlayerService {
      * @param id the unique identifier of the player
      * @return the Player object associated with the given id
      */
-    Player getPlayer(long id);
+    Player getPlayerById(long id);
 
     Set<Player> getAllPlayers();
 
