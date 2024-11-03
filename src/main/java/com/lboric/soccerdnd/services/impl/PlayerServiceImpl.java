@@ -60,10 +60,6 @@ public class PlayerServiceImpl implements PlayerService {
      *
      * {@inheritDoc}
      *
-     * Retrieves a player by their ID.
-     * @param id the ID of the player to retrieve.
-     * @return the Player model if found.
-     * @throws PlayerNotFoundException if the player does not exist.
      */
     @Override
     public Player getPlayerById(final Long id) throws PlayerNotFoundException {
@@ -79,8 +75,6 @@ public class PlayerServiceImpl implements PlayerService {
      *
      * {@inheritDoc}
      *
-     * Retrieves all players.
-     * @return a set of all Player models.
      */
     @Override
     public Set<Player> getAllPlayers() {
@@ -91,10 +85,6 @@ public class PlayerServiceImpl implements PlayerService {
      *
      * {@inheritDoc}
      *
-     * Adds a new player.
-     * @param player the player to add.
-     * @return the added Player model.
-     * @throws PlayerAlreadyExistsException if the player already exists.
      */
     @Override
     public Player addPlayer(final Player player) throws PlayerAlreadyExistsException {
@@ -108,13 +98,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     /**
+     *
      * {@inheritDoc}
      *
-     * Adds multiple players.
-     *
-     * @param players the set of players to add.
-     * @return a set of added Player models.
-     * @throws PlayerAlreadyExistsException if one or more players already exist.
      */
     @Override
     public Set<Player> addMultiplePlayers(final Set<Player> players) throws PlayerAlreadyExistsException {
@@ -130,13 +116,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     /**
+     *
      * {@inheritDoc}
      *
-     * Updates an existing player.
-     *
-     * @param player the player to update.
-     * @return the updated Player model.
-     * @throws PlayerNotFoundException if the player does not exist.
      */
     @Override
     public Player updatePlayer(final Player player) throws PlayerNotFoundException {
@@ -147,8 +129,15 @@ public class PlayerServiceImpl implements PlayerService {
             .orElseThrow(() -> new PlayerNotFoundException(String.format("Player with ID: %d, NAME: %s, SURNAME: %s not found.", player.getId(), player.getName(), player.getSurname())));
     }
 
+    /**
+     *
+     * {@inheritDoc}
+     *
+     */
     @Override
-    public void deletePlayer(final Long id) {
+    public void deletePlayer(final Long id) throws PlayerNotFoundException {
+        if (PlayerUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+
         this.playerRepository.deleteById(id);
     }
 

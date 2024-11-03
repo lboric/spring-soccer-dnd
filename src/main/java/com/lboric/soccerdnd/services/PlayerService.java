@@ -55,6 +55,12 @@ public interface PlayerService {
      */
     Player updatePlayer(Player player) throws PlayerNotFoundException;
 
+    /**
+     * Deletes a player from the system by their unique identifier.
+     *
+     * @param id the unique identifier of the player to be deleted
+     * @throws PlayerNotFoundException if no player is found with the specified id
+     */
     void deletePlayer(Long id);
 
 }
