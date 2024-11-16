@@ -107,8 +107,6 @@ public class PlayerServiceImpl implements PlayerService {
               players.stream().map(Player::toEntity).collect(Collectors.toSet()))
             );
         } catch (final DataIntegrityViolationException e) {
-
-
             log.warn("One or more players could not be added", e);
 
             throw new PlayerAlreadyExistsException("One or more players could not be added because they already exist.");
