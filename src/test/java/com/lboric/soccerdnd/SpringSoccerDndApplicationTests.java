@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mockStatic;
 class SpringSoccerDndApplicationTests {
 
     @Test
-    @DisplayName("GIVEN application sucessufly runs, WHEN main method is called, THEN context should load")
+    @DisplayName("GIVEN application successfully runs, WHEN main method is called, THEN context should load")
     void contextLoads() {
     }
 

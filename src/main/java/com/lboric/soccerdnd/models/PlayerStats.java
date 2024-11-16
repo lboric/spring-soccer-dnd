@@ -27,4 +27,6 @@ public class PlayerStats {
         return new PlayerStatsDTO(this.id, this.name, this.surname, this.seasonYear, this.numberOfGoals);
     }
 
+
+
 }
