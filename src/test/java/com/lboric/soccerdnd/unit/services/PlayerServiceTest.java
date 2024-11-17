@@ -65,7 +65,7 @@ class PlayerServiceTest {
 
     @ParameterizedTest
     @Order(2)
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersIdAndNameAndSurname")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#getPlayerByIdArgumentSet")
     @DisplayName("GIVEN an existing player ID, WHEN playerService.getPlayerById is called, THEN it should return the correct player")
     void testGetPlayerById(final Long id, final String expectedName, final String expectedSurname) {
         final Player player = this.playerService.getPlayerById(id);
@@ -89,7 +89,7 @@ class PlayerServiceTest {
 
     @ParameterizedTest
     @Order(3)
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersNameAndSurname")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#getPlayerByNameAndSurnameArgumentSet")
     @DisplayName("GIVEN an existing player, WHEN playerService.getPlayerByNameAndSurname is called, THEN it should return the correct player")
     void testGetPlayerByNameAndSurname(final String expectedName, final String expectedSurname) {
         final Player player = this.playerService.getPlayerByNameAndSurname(expectedName, expectedSurname);
@@ -115,7 +115,7 @@ class PlayerServiceTest {
     @Order(5)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#providePlayersWithoutIds")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#addPlayerArgumentSet")
     @DisplayName("GIVEN a player is added, WHEN playerService.addPlayer is called, THEN it should return the added player")
     void testAddPlayer(final Player expectedPlayer) {
         final Player addedPlayer = this.playerService.addPlayer(expectedPlayer);
@@ -140,7 +140,7 @@ class PlayerServiceTest {
     @Order(7)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideUpdatedPlayersWithExistingIds")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#updatePlayerArgumentSet")
     @DisplayName("GIVEN a player is updated, WHEN playerService.updatePlayer is called, THEN it should return the updated player")
     void testUpdatePlayer(final Player expectedPlayer) {
         final Player updatedPlayer = this.playerService.updatePlayer(expectedPlayer);
@@ -166,7 +166,7 @@ class PlayerServiceTest {
     @Order(9)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersIds")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#deletePlayersByIdArgumentSet")
     @DisplayName("GIVEN a player is deleted, WHEN playerService.deletePlayerById is called, THEN it should delete the player")
     void testDeletePlayerById(final Long id) {
         this.playerService.deletePlayerById(id);
