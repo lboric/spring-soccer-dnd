@@ -33,7 +33,7 @@ class PlayerRepositoryTest {
     @Rollback(false)
     @DisplayName("GIVEN a new player, WHEN saved, THEN it should be persisted correctly")
     void testSavePlayer() {
-        final PlayerEntity playerEntity = new PlayerEntity(null, "test", "player4");
+        final PlayerEntity playerEntity = PlayerEntity.builder().id(null).name("test").surname("player4").build();
         final PlayerEntity savedPlayer = this.playerRepository.save(playerEntity);
 
         assertAll(

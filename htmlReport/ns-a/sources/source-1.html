@@ -1,0 +1,87 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > PlayerStatsService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.lboric.soccerdnd.services</a>
+</div>
+
+<h1>Coverage Summary for Class: PlayerStatsService (com.lboric.soccerdnd.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">PlayerStatsService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.lboric.soccerdnd.services;
+&nbsp;
+&nbsp;import java.util.Set;
+&nbsp;
+&nbsp;import com.lboric.soccerdnd.models.PlayerStats;
+&nbsp;
+&nbsp;public interface PlayerStatsService {
+&nbsp;
+&nbsp;    PlayerStats getPlayerStatsById(Long id);
+&nbsp;
+&nbsp;    Set&lt;PlayerStats&gt; getAllPlayersStats();
+&nbsp;
+&nbsp;    PlayerStats addPlayerStats(PlayerStats playerStats);
+&nbsp;
+&nbsp;    PlayerStats updatePlayerStats(PlayerStats playerStats);
+&nbsp;
+&nbsp;    void deletePlayerStatsByNameSurnameAndSeasonYear(PlayerStats playerStats);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-11-17 23:23</div>
+</div>
+</body>
+</html>

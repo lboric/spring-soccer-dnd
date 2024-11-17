@@ -20,6 +20,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
+    @ExceptionHandler(PlayerStatsNotFoundException.class)
+    public ResponseEntity<String> handlePlayerStatsNotFound(final PlayerStatsNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(PlayerStatsAlreadyExistsException.class)
+    public ResponseEntity<String> handlePlayerStatsAlreadyExists(final PlayerStatsAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException() {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
@@ -30,9 +40,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("API endpoint doesn't exist.");
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, IllegalArgumentException.class})
     public ResponseEntity<String> handleBadArgumentException() {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request - Argument mismatch");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request - Argument mismatch or invalid arguments");
     }
 
 }

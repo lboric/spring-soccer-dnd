@@ -1,6 +1,8 @@
 package com.lboric.soccerdnd.models;
 
 import com.lboric.soccerdnd.dtos.PlayerStatsDTO;
+import com.lboric.soccerdnd.entities.PlayerEntity;
+import com.lboric.soccerdnd.entities.PlayerStatsEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlayerStats {
 
-    private long id;
+    private long playerId;
 
     private String name;
 
@@ -24,9 +26,16 @@ public class PlayerStats {
     private int numberOfGoals;
 
     public PlayerStatsDTO toDTO() {
-        return new PlayerStatsDTO(this.id, this.name, this.surname, this.seasonYear, this.numberOfGoals);
+        return new PlayerStatsDTO(this.playerId, this.name, this.surname, this.seasonYear, this.numberOfGoals);
     }
 
-
+    public PlayerStatsEntity toEntity(final PlayerEntity playerEntity) {
+        return PlayerStatsEntity.builder()
+           .id(this.playerId)
+           .player(playerEntity)
+           .seasonYear(this.seasonYear)
+           .numberOfGoals(this.numberOfGoals)
+           .build();
+    }
 
 }

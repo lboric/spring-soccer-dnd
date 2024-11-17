@@ -75,6 +75,19 @@ public class PlayerServiceImpl implements PlayerService {
             });
     }
 
+    @Override
+    public Player getPlayerByNameAndSurname(final String name, final String surname) throws PlayerNotFoundException {
+        return this.playerRepository.findByNameAndSurname(name, surname)
+            .map(PlayerEntity::toModel)
+            .orElseThrow(() -> {
+                final String message = String.format("Player %s %s not found.", name, surname);
+
+                log.warn(message);
+
+                return new PlayerNotFoundException(message);
+            });
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -135,6 +148,8 @@ public class PlayerServiceImpl implements PlayerService {
         if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
 
         this.playerRepository.deleteById(id);
+
+        log.info("Deleted player with ID: {}", id);
     }
 
 }

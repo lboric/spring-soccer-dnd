@@ -1,7 +1,6 @@
 package com.lboric.soccerdnd.controllers;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -52,19 +51,14 @@ public class PlayerController {
     }
 
     @PostMapping("/add-player")
-    ResponseEntity<PlayerDTO> addPlayer(@RequestBody final PlayerDTO playerDTO) {
+    ResponseEntity<PlayerDTO> addPlayer(@NonNull @RequestBody final PlayerDTO playerDTO) {
         final PlayerDTO resultPlayerDTO = this.playerService.addPlayer(playerDTO.toModel()).toDTO();
 
         return ResponseEntity.ok(resultPlayerDTO);
     }
 
-    @PostMapping("/add-players")
-    ResponseEntity<PlayerDTO> addPlayer(@RequestBody final List<PlayerDTO> playerDTO) {
-        return null;
-    }
-
     @PutMapping("/update-player")
-    ResponseEntity<PlayerDTO> updatePlayer(@RequestBody final PlayerDTO playerDTO) {
+    ResponseEntity<PlayerDTO> updatePlayer(@NonNull @RequestBody final PlayerDTO playerDTO) {
         final PlayerDTO resultPlayerDTO = this.playerService.updatePlayer(playerDTO.toModel()).toDTO();
 
         return ResponseEntity.ok(resultPlayerDTO);
