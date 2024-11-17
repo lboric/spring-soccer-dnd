@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "0d5e8a62-ed19-495e-8bc5-0145af8c1bd5",
+		"name": "spring-soccer-dnd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6114312"
+	},
+	"item": [
+		{
+			"name": "/api/players",
+			"item": [
+				{
+					"name": "Add Player",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Filip\",\r\n    \"surname\": \"Borić\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/players/add-player",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"add-player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Player",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"name\": \"Riki\",\r\n    \"surname\": \"Borić\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/players/update-player",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"update-player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Player",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/players/delete-player/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"delete-player",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Player By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Players",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/player-stats",
+			"item": [
+				{
+					"name": "Find All Player Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/player-stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"player-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Player Stats",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"playerId\": \"1\",\r\n    \"seasonYear\": \"2024\",\r\n    \"numberOfGoals\": \"55\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/player-stats/update-player-stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"player-stats",
+								"update-player-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Player Stats",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Luka\",\r\n    \"surname\": \"Boric\",\r\n    \"seasonYear\": \"2025\",\r\n    \"numberOfGoals\": \"34\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/player-stats/add-player-stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"player-stats",
+								"add-player-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Player Stats",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Luka\",\r\n    \"surname\": \"Boric\",\r\n    \"seasonYear\": \"2025\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/player-stats/delete-player-stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"player-stats",
+								"delete-player-stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
