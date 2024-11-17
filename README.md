@@ -62,7 +62,7 @@
 - `PUT /api/player-stats/update-player-stats` - Update player stats.
 - `DELETE /api/player-stats/delete-player-stats` - Delete stats by player and season year.
 
-[Download the Postman Collection](https://link-to-your-postman-collection)
+[Download the Postman Collection](https://github.com/lboric/spring-soccer-dnd/blob/main/src/main/resources/spring-soccer-dnd.postman_collection.json)
 
 ---
 
