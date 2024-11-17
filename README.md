@@ -1,9 +1,82 @@
-# spring-soccer-dnd
+# Soccer DnD Player Stats Management App
 
 ![spring-soccer-dnd_small](https://github.com/user-attachments/assets/da79f9a3-34b8-4096-bb98-81d48bfa8bb7)
 <br/><br/>
 
-<h1>Overall Coverage Summary </h1>
+**Soccer DnD Player Stats Management System**, designed to manage and track players' performance statistics over multiple seasons. The app provides RESTful APIs for handling players and their season-specific stats, offering seamless CRUD operations, robust validation, and detailed exception handling.
+
+---
+
+## **Features**
+- **Player Management**:
+  - Add, update, retrieve, and delete players.
+  - Supports validation to ensure data integrity (e.g., checking for existing players before adding or updating records).
+
+- **Player Stats Management**:
+  - Track player performance for specific seasons, including goals scored.
+  - Prevents duplicate stats entries for the same player and season via unique constraints.
+  - Update existing stats or add new ones dynamically.
+  
+- **Exception Handling**:
+  - Custom exception responses for missing players, invalid stats, and unexpected errors.
+
+- **Custom Queries**:
+  - Retrieve all player stats with a detailed breakdown.
+  - Fetch specific stats based on player ID, name, or season year.
+
+---
+
+## **Tech Stack**
+- **Backend**:
+  - **Java 21**
+  - **Spring Boot**: Framework for developing RESTful APIs.
+  - **Spring Data JPA & Hibernate**: ORM for database interaction, mapping Java objects to database tables, and enabling seamless query handling.
+  - **Lombok**: Simplifies boilerplate code with annotations.
+  
+- **Database**:
+  - **H2 Database**: In-memory relational database for testing and development.
+
+- **Testing**:
+  - **JUnit 5**: Unit testing framework.
+  - **MockMvc**: Simulates HTTP requests for controller testing.
+  - **Mockito**: Mocks service dependencies to test specific behaviors.
+  - **Parameterized Testing**: Dynamic test cases for diverse scenarios.
+
+- **Other Libraries**:
+  - **Jakarta Persistence API (JPA)**: Standardized ORM API supported by Hibernate.
+
+---
+
+## **Endpoints**
+### Player Endpoints:
+- `GET /api/players` - Fetch all players.
+- `GET /api/players/{id}` - Fetch a player by ID.
+- `POST /api/players/add-player` - Add a new player.
+- `PUT /api/players/update-player` - Update player stats.
+- `DELETE /api/players/delete-player/{id}` - Delete a player.
+
+### Player Stats Endpoints:
+- `GET /api/player-stats` - Retrieve all player stats.
+- `GET /api/player-stats/{playerId}` - Retrieve stats for a specific player.
+- `POST /api/player-stats/add-player-stats` - Add player stats.
+- `PUT /api/player-stats/update-player-stats` - Update player stats.
+- `DELETE /api/player-stats/delete-player-stats` - Delete stats by player and season year.
+
+[Download the Postman Collection](https://link-to-your-postman-collection)
+
+---
+
+## **How to Run**
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/lboric/spring-soccer-dnd.git
+2. Run Sprint Boot app:
+   ```bash
+   ./mvnw spring-boot:run
+
+---
+
+<h2>Overall Coverage Summary </h2>
 <table class="coverageStats">
   <tr>
     <th class="name">Package</th>
