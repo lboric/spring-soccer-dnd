@@ -42,12 +42,6 @@ public class PlayerEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<PlayerStatsEntity> playerStats;
 
-    public PlayerEntity(final Long id, final String name, final String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
-
     public Player toModel() {
         return Player.builder()
             .id(this.id)

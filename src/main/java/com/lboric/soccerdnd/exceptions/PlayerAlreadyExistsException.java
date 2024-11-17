@@ -8,5 +8,4 @@ public class PlayerAlreadyExistsException extends DataIntegrityViolationExceptio
         super(message);
     }
 
-
 }

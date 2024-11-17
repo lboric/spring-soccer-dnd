@@ -2,11 +2,11 @@ package com.lboric.soccerdnd.dtos;
 
 import com.lboric.soccerdnd.models.PlayerStats;
 
-public record PlayerStatsDTO(long id, String name, String surname, int seasonYear, int numberOfGoals) {
+public record PlayerStatsDTO(long playerId, String name, String surname, int seasonYear, int numberOfGoals) {
 
     public PlayerStats toModel() {
         return PlayerStats.builder()
-            .id(this.id)
+            .playerId(this.playerId)
             .name(this.name)
             .surname(this.surname)
             .seasonYear(this.seasonYear())

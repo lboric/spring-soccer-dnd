@@ -65,9 +65,9 @@ class PlayerServiceTest {
 
     @ParameterizedTest
     @Order(2)
-    @MethodSource("com.lboric.soccerdnd.utils.TestUtils#provideExistingPlayersIdAndNameAndSurname")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersIdAndNameAndSurname")
     @DisplayName("GIVEN an existing player ID, WHEN playerService.getPlayerById is called, THEN it should return the correct player")
-    void testGetPlayerById(final long id, final String expectedName, final String expectedSurname) {
+    void testGetPlayerById(final Long id, final String expectedName, final String expectedSurname) {
         final Player player = this.playerService.getPlayerById(id);
 
         assertAll(
@@ -82,14 +82,40 @@ class PlayerServiceTest {
     @Order(3)
     @DisplayName("GIVEN a non-existent player ID, WHEN playerService.getPlayerById is called, THEN it should throw PlayerNotFoundException")
     void testGetPlayerByNonExistentId() {
-        final long nonExistingPlayerId = 4L;
+        final Long nonExistingPlayerId = 4L;
 
         assertThrows(PlayerNotFoundException.class, () -> this.playerService.getPlayerById(nonExistingPlayerId));
     }
 
     @ParameterizedTest
+    @Order(3)
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersNameAndSurname")
+    @DisplayName("GIVEN an existing player, WHEN playerService.getPlayerByNameAndSurname is called, THEN it should return the correct player")
+    void testGetPlayerByNameAndSurname(final String expectedName, final String expectedSurname) {
+        final Player player = this.playerService.getPlayerByNameAndSurname(expectedName, expectedSurname);
+
+        assertAll(
+          () -> assertNotNull(player, "Player object should not be null"),
+          () -> assertEquals(expectedName, player.getName(), "Player name should match"),
+          () -> assertEquals(expectedSurname, player.getSurname(), "Player surname should match")
+        );
+    }
+
+    @Test
     @Order(4)
-    @MethodSource("com.lboric.soccerdnd.utils.TestUtils#providePlayersWithoutIds")
+    @DisplayName("GIVEN an non-existing player, WHEN playerService.testGetNonExistentPlayerByNameAndSurname is called, THEN it should throw PlayerNotFoundException")
+    void testGetNonExistentPlayerByNameAndSurname() {
+        final String name = "NON-EXISTENT";
+        final String surname = "NON-EXISTENT";
+
+        assertThrows(PlayerNotFoundException.class, () -> this.playerService.getPlayerByNameAndSurname(name, surname));
+    }
+
+    @ParameterizedTest
+    @Order(5)
+    @Rollback
+    @Transactional
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#providePlayersWithoutIds")
     @DisplayName("GIVEN a player is added, WHEN playerService.addPlayer is called, THEN it should return the added player")
     void testAddPlayer(final Player expectedPlayer) {
         final Player addedPlayer = this.playerService.addPlayer(expectedPlayer);
@@ -102,8 +128,8 @@ class PlayerServiceTest {
     }
 
     @Test
-    @Order(5)
-    @DisplayName("GIVEN a player is added but already exists, WHEN playerService.addPlayer is called, THEN it should throw exception")
+    @Order(6)
+    @DisplayName("GIVEN a player is added but already exists, WHEN playerService.addPlayer is called, THEN it should throw PlayerAlreadyExistsException")
     void testAddPlayerButItAlreadyExists() {
         final Player existingPlayer = Player.builder().name("test").surname("player1").build();
 
@@ -111,10 +137,10 @@ class PlayerServiceTest {
     }
 
     @ParameterizedTest
-    @Order(6)
+    @Order(7)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.TestUtils#provideUpdatedPlayersWithExistingIds")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideUpdatedPlayersWithExistingIds")
     @DisplayName("GIVEN a player is updated, WHEN playerService.updatePlayer is called, THEN it should return the updated player")
     void testUpdatePlayer(final Player expectedPlayer) {
         final Player updatedPlayer = this.playerService.updatePlayer(expectedPlayer);
@@ -128,8 +154,8 @@ class PlayerServiceTest {
     }
 
     @Test
-    @Order(7)
-    @DisplayName("GIVEN a non-existent player is trying to be updated, WHEN playerService.updatePlayer is called, THEN it should throw exception")
+    @Order(8)
+    @DisplayName("GIVEN a non-existent player is trying to be updated, WHEN playerService.updatePlayer is called, THEN it should throw PlayerNotFoundException")
     void testUpdatePlayerWhichDoesntExist() {
         final Player nonExistantPlayer = Player.builder().id(10L).name("NON-EXISTENT").surname("NON-EXISTENT").build();
 
@@ -137,10 +163,10 @@ class PlayerServiceTest {
     }
 
     @ParameterizedTest
-    @Order(8)
+    @Order(9)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.TestUtils#provideExistingPlayersIds")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersIds")
     @DisplayName("GIVEN a player is deleted, WHEN playerService.deletePlayerById is called, THEN it should delete the player")
     void testDeletePlayerById(final Long id) {
         this.playerService.deletePlayerById(id);
@@ -149,7 +175,7 @@ class PlayerServiceTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     @Rollback
     @Transactional
     @DisplayName("GIVEN multiple players are added, WHEN playerService.addMultiplePlayers is called, THEN it should return the added players")
@@ -171,8 +197,8 @@ class PlayerServiceTest {
     }
 
     @Test
-    @Order(10)
-    @DisplayName("GIVEN multiple players are added but one already exists, WHEN playerService.addMultiplePlayers is called, THEN it should throw exception")
+    @Order(11)
+    @DisplayName("GIVEN multiple players are added but one already exists, WHEN playerService.addMultiplePlayers is called, THEN it should throw PlayerAlreadyExistsException")
     void testAddMultiplePlayersButOneAlreadyExists() {
         final Set<Player> playersToAdd = Set.of(
           Player.builder().name("test").surname("player1").build(),

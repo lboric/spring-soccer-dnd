@@ -21,6 +21,8 @@ public interface PlayerService {
      */
     Player getPlayerById(Long id) throws PlayerNotFoundException;
 
+    Player getPlayerByNameAndSurname(String name, String surname) throws PlayerNotFoundException;
+
     /**
      * Retrieves all players in the system.
      *

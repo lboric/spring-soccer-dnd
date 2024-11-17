@@ -10,12 +10,10 @@ public interface PlayerStatsService {
 
     Set<PlayerStats> getAllPlayersStats();
 
-    PlayerStats addPlayerStats();
+    PlayerStats addPlayerStats(PlayerStats playerStats);
 
-    PlayerStats updatePlayerStats();
+    PlayerStats updatePlayerStats(PlayerStats playerStats);
 
-    void deletePlayerStatsByPlayerId();
-
-    void deletePlayerStatsBySeasonYear();
+    void deletePlayerStatsByNameSurnameAndSeasonYear(PlayerStats playerStats);
 
 }
