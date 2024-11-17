@@ -1,0 +1,259 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > PlayerServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.lboric.soccerdnd.services.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: PlayerServiceImpl (com.lboric.soccerdnd.services.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (34/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.lboric.soccerdnd.services.impl;
+&nbsp;
+&nbsp;import java.util.Set;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.dao.DataIntegrityViolationException;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import com.lboric.soccerdnd.entities.PlayerEntity;
+&nbsp;import com.lboric.soccerdnd.exceptions.PlayerAlreadyExistsException;
+&nbsp;import com.lboric.soccerdnd.exceptions.PlayerNotFoundException;
+&nbsp;import com.lboric.soccerdnd.models.Player;
+&nbsp;import com.lboric.soccerdnd.repositories.PlayerRepository;
+&nbsp;import com.lboric.soccerdnd.services.PlayerService;
+&nbsp;import com.lboric.soccerdnd.utils.ConversionUtils;
+&nbsp;import com.lboric.soccerdnd.utils.ValidationUtils;
+&nbsp;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;
+&nbsp;/**
+&nbsp; * Implementation of the {@link PlayerService} interface that handles operations related to Player entities.
+&nbsp; * This service provides methods for retrieving, adding, and updating player data.
+&nbsp; * It interacts with the {@link PlayerRepository} to perform database operations
+&nbsp; * and utilizes custom exceptions to handle specific error scenarios.
+&nbsp; *
+&nbsp; * &lt;p&gt;
+&nbsp; * The following operations are supported:
+&nbsp; * &lt;ul&gt;
+&nbsp; *   &lt;li&gt;Retrieve a single player by their ID.&lt;/li&gt;
+&nbsp; *   &lt;li&gt;Retrieve all players.&lt;/li&gt;
+&nbsp; *   &lt;li&gt;Add a new player to the repository.&lt;/li&gt;
+&nbsp; *   &lt;li&gt;Add multiple players in one operation.&lt;/li&gt;
+&nbsp; *   &lt;li&gt;Update an existing player&#39;s information.&lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; * &lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;
+&nbsp; * Each method throws specific exceptions such as {@link PlayerNotFoundException}
+&nbsp; * and {@link PlayerAlreadyExistsException} to indicate failure scenarios,
+&nbsp; * ensuring clear communication of issues to the calling layers.
+&nbsp; * &lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;
+&nbsp; * This class also contains logging for important actions and errors, aiding in debugging and
+&nbsp; * operational monitoring.
+&nbsp; * &lt;/p&gt;
+&nbsp; */
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@Service
+&nbsp;public class PlayerServiceImpl implements PlayerService {
+&nbsp;
+&nbsp;    private final PlayerRepository playerRepository;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    PlayerServiceImpl(final PlayerRepository playerRepository) {</b>
+<b class="fc">&nbsp;        this.playerRepository = playerRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Player getPlayerById(final Long id) throws PlayerNotFoundException {
+<b class="fc">&nbsp;        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException(&quot;You must provide an existing player ID.&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        return this.playerRepository.findById(id)</b>
+<b class="fc">&nbsp;            .map(PlayerEntity::toModel)</b>
+<b class="fc">&nbsp;            .orElseThrow(() -&gt; {</b>
+<b class="fc">&nbsp;                final String message = String.format(&quot;Player with id: %d not found.&quot;, id);</b>
+&nbsp;
+<b class="fc">&nbsp;                log.warn(message);</b>
+&nbsp;
+<b class="fc">&nbsp;                return new PlayerNotFoundException(message);</b>
+&nbsp;            });
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Player getPlayerByNameAndSurname(final String name, final String surname) throws PlayerNotFoundException {
+<b class="fc">&nbsp;        return this.playerRepository.findByNameAndSurname(name, surname)</b>
+<b class="fc">&nbsp;            .map(PlayerEntity::toModel)</b>
+<b class="fc">&nbsp;            .orElseThrow(() -&gt; {</b>
+<b class="fc">&nbsp;                final String message = String.format(&quot;Player %s %s not found.&quot;, name, surname);</b>
+&nbsp;
+<b class="fc">&nbsp;                log.warn(message);</b>
+&nbsp;
+<b class="fc">&nbsp;                return new PlayerNotFoundException(message);</b>
+&nbsp;            });
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Set&lt;Player&gt; getAllPlayers() {
+<b class="fc">&nbsp;        return ConversionUtils.convertEntitiesToModels(this.playerRepository.findAll());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Player addPlayer(final Player player) throws PlayerAlreadyExistsException {
+&nbsp;        try {
+<b class="fc">&nbsp;            return this.playerRepository.save(player.toEntity()).toModel();</b>
+<b class="fc">&nbsp;        } catch (final DataIntegrityViolationException e) {</b>
+<b class="fc">&nbsp;            log.error(&quot;Player {} {} already exists&quot;, player.getName(), player.getSurname(), e);</b>
+&nbsp;
+<b class="fc">&nbsp;            throw new PlayerAlreadyExistsException(String.format(&quot;Player with name: %s and surname: %s already exists.&quot;, player.getName(), player.getSurname()));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Set&lt;Player&gt; addMultiplePlayers(final Set&lt;Player&gt; players) throws PlayerAlreadyExistsException {
+&nbsp;        try {
+<b class="fc">&nbsp;            return ConversionUtils.convertEntitiesToModels(this.playerRepository.saveAll(</b>
+<b class="fc">&nbsp;              players.stream().map(Player::toEntity).collect(Collectors.toSet()))</b>
+&nbsp;            );
+<b class="fc">&nbsp;        } catch (final DataIntegrityViolationException e) {</b>
+<b class="fc">&nbsp;            log.warn(&quot;One or more players could not be added&quot;, e);</b>
+&nbsp;
+<b class="fc">&nbsp;            throw new PlayerAlreadyExistsException(&quot;One or more players could not be added because they already exist.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Player updatePlayer(final Player player) throws PlayerNotFoundException {
+<b class="fc">&nbsp;        if (ValidationUtils.checkIfPlayerIsMissingID(player)) throw new PlayerNotFoundException(&quot;You must provide an existing player ID.&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        return this.playerRepository.updatePlayer(player)</b>
+<b class="fc">&nbsp;            .map(PlayerEntity::toModel)</b>
+<b class="fc">&nbsp;            .orElseThrow(</b>
+<b class="fc">&nbsp;              () -&gt; new PlayerNotFoundException(String.format(&quot;Player with id: %d, name: %s, surname: %s not found.&quot;, player.getId(), player.getName(), player.getSurname()))</b>
+&nbsp;            );
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void deletePlayerById(final Long id) throws PlayerNotFoundException {
+<b class="fc">&nbsp;        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException(&quot;You must provide an existing player ID.&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.playerRepository.deleteById(id);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Deleted player with ID: {}&quot;, id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-11-17 23:23</div>
+</div>
+</body>
+</html>

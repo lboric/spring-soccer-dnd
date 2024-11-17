@@ -1,0 +1,178 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > PlayerStatsController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.lboric.soccerdnd.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: PlayerStatsController (com.lboric.soccerdnd.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerStatsController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.lboric.soccerdnd.controllers;
+&nbsp;
+&nbsp;import java.util.Comparator;
+&nbsp;import java.util.SortedSet;
+&nbsp;import java.util.TreeSet;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.DeleteMapping;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;import org.springframework.web.bind.annotation.PostMapping;
+&nbsp;import org.springframework.web.bind.annotation.PutMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestBody;
+&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;import com.lboric.soccerdnd.dtos.PlayerStatsDTO;
+&nbsp;import com.lboric.soccerdnd.models.PlayerStats;
+&nbsp;import com.lboric.soccerdnd.services.PlayerStatsService;
+&nbsp;
+&nbsp;import lombok.NonNull;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/player-stats&quot;)
+&nbsp;public class PlayerStatsController {
+&nbsp;
+&nbsp;    private final PlayerStatsService playerStatsService;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    PlayerStatsController(final PlayerStatsService playerStatsService) {</b>
+<b class="fc">&nbsp;        this.playerStatsService = playerStatsService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    ResponseEntity&lt;SortedSet&lt;PlayerStatsDTO&gt;&gt; getPlayersStats() {
+<b class="fc">&nbsp;        final SortedSet&lt;PlayerStatsDTO&gt; playerStatsDTO = this.playerStatsService.getAllPlayersStats()</b>
+<b class="fc">&nbsp;        .stream()</b>
+<b class="fc">&nbsp;        .map(PlayerStats::toDTO)</b>
+<b class="fc">&nbsp;        .collect(Collectors.toCollection(</b>
+<b class="fc">&nbsp;          () -&gt; new TreeSet&lt;&gt;(Comparator.comparingLong(PlayerStatsDTO::playerId).thenComparingInt(PlayerStatsDTO::seasonYear)))</b>
+&nbsp;        );
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.ok(playerStatsDTO);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; getPlayerStatsByPlayerId(@NonNull @PathVariable final Long id) {</b>
+<b class="fc">&nbsp;        final PlayerStatsDTO playerStatsDTO = this.playerStatsService.getPlayerStatsById(id).toDTO();</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.ok(playerStatsDTO);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/add-player-stats&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; addPlayerStats(@NonNull @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
+<b class="fc">&nbsp;        final PlayerStatsDTO resultPlayerDTO = this.playerStatsService.addPlayerStats(playerStatsDTO.toModel()).toDTO();</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.ok(resultPlayerDTO);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/update-player-stats&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; updatePlayerStats(@NonNull @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
+<b class="fc">&nbsp;        final PlayerStatsDTO resultPlayerDTO = this.playerStatsService.updatePlayerStats(playerStatsDTO.toModel()).toDTO();</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.ok(resultPlayerDTO);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete-player-stats&quot;)
+&nbsp;    void deletePlayer(@RequestBody final PlayerStatsDTO playerStatsDTO) {
+<b class="fc">&nbsp;        this.playerStatsService.deletePlayerStatsByNameSurnameAndSeasonYear(playerStatsDTO.toModel());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-11-17 23:23</div>
+</div>
+</body>
+</html>
