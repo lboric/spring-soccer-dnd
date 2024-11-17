@@ -67,7 +67,7 @@ class PlayerStatsServiceTest {
 
     @ParameterizedTest
     @Order(2)
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideExistingPlayersStats")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#getPlayerStatsByIdArgumentSet")
     @DisplayName("GIVEN player id, WHEN playerStatsService.getPlayerStatsById is called, THEN it should return stats for that player")
     void testGetPlayerStatsById(final Long id, final String expectedName, final String expectedSurname, final int seasonYear, final int numberOfGoals) {
         final PlayerStats playerStats = this.playerStatsService.getPlayerStatsById(id);
@@ -92,7 +92,7 @@ class PlayerStatsServiceTest {
     @Order(4)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#providePlayersStatsToAdd")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#addPlayerStatsArgumentSet")
     @DisplayName("GIVEN a player stats is added, WHEN playerStatsService.addPlayerStats is called, THEN it should return the added player stats")
     void testAddPlayerStats(final PlayerStats expectedPlayerStats) {
         final PlayerStats addedPlayerStats = this.playerStatsService.addPlayerStats(expectedPlayerStats);
@@ -122,7 +122,7 @@ class PlayerStatsServiceTest {
     @Order(6)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#provideUpdatedPlayersStats")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#updatePlayerStatsArgumentSet")
     @DisplayName("GIVEN a player stats is updated, WHEN playerStatsService.updatePlayerStats is called, THEN it should return the updated player stats")
     void testUpdatePlayerStats(final PlayerStats expectedPlayerStats) {
         final PlayerStats beforeUpdatePlayerStats = this.playerStatsService.getPlayerStatsById(expectedPlayerStats.getPlayerId());
@@ -169,7 +169,7 @@ class PlayerStatsServiceTest {
     @Order(9)
     @Rollback
     @Transactional
-    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#providePlayersStatsToDelete")
+    @MethodSource("com.lboric.soccerdnd.utils.ServiceTestUtils#deletePlayerStatsByNameAndSurnameArgumentSet")
     @DisplayName("GIVEN a player stats is deleted, WHEN playerStatsService.deletePlayerStatsByNameSurnameAndSeasonYear is called, THEN it should delete the player")
     void testDeletePlayerStatsByNameAndSurname(final PlayerStats playerStatsToDelete) {
         this.playerStatsService.deletePlayerStatsByNameSurnameAndSeasonYear(playerStatsToDelete);

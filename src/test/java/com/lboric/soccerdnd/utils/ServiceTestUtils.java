@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServiceTestUtils {
 
-    static Stream<Arguments> provideExistingPlayersIds() {
+    static Stream<Arguments> deletePlayersByIdArgumentSet() {
         return Stream.of(
           Arguments.of(1L),
           Arguments.of(2L),
@@ -21,7 +21,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> provideExistingPlayersNameAndSurname() {
+    static Stream<Arguments> getPlayerByNameAndSurnameArgumentSet() {
         return Stream.of(
           Arguments.of("test", "player1"),
           Arguments.of("test", "player2"),
@@ -29,7 +29,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> provideExistingPlayersIdAndNameAndSurname() {
+    static Stream<Arguments> getPlayerByIdArgumentSet() {
         return Stream.of(
           Arguments.of(1L, "test", "player1"),
           Arguments.of(2L, "test", "player2"),
@@ -37,7 +37,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> providePlayersWithoutIds() {
+    static Stream<Arguments> addPlayerArgumentSet() {
         return Stream.of(
           Arguments.of(Player.builder().name("test").surname("player4").build()),
           Arguments.of(Player.builder().name("test").surname("player5").build()),
@@ -45,7 +45,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> provideUpdatedPlayersWithExistingIds() {
+    static Stream<Arguments> updatePlayerArgumentSet() {
         return Stream.of(
           Arguments.of(Player.builder().id(1L).name("updatedTest").surname("updatedPlayer1").build()),
           Arguments.of(Player.builder().id(2L).name("updatedTest").surname("updatedPlayer2").build()),
@@ -53,7 +53,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> provideExistingPlayersStats() {
+    static Stream<Arguments> getPlayerStatsByIdArgumentSet() {
         return Stream.of(
           Arguments.of(1L, "test", "player1", "2024", "17"),
           Arguments.of(2L, "test", "player2", "2024", "21"),
@@ -61,7 +61,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> providePlayersStatsToAdd() {
+    static Stream<Arguments> addPlayerStatsArgumentSet() {
         return Stream.of(
           Arguments.of(PlayerStats.builder().playerId(1L).name("test").surname("player1").seasonYear(2025).numberOfGoals(1).build()),
           Arguments.of(PlayerStats.builder().playerId(2L).name("test").surname("player2").seasonYear(2025).numberOfGoals(2).build()),
@@ -69,7 +69,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> provideUpdatedPlayersStats() {
+    static Stream<Arguments> updatePlayerStatsArgumentSet() {
         return Stream.of(
           Arguments.of(PlayerStats.builder().playerId(1L).name("test").surname("player1").seasonYear(2024).numberOfGoals(1).build()),
           Arguments.of(PlayerStats.builder().playerId(2L).name("test").surname("player2").seasonYear(2024).numberOfGoals(2).build()),
@@ -77,7 +77,7 @@ public class ServiceTestUtils {
         );
     }
 
-    static Stream<Arguments> providePlayersStatsToDelete() {
+    static Stream<Arguments> deletePlayerStatsByNameAndSurnameArgumentSet() {
         return Stream.of(
           Arguments.of(PlayerStats.builder().playerId(1L).name("test").surname("player1").seasonYear(2024).numberOfGoals(17).build()),
           Arguments.of(PlayerStats.builder().playerId(2L).name("test").surname("player2").seasonYear(2024).numberOfGoals(21).build()),
