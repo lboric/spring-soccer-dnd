@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlayerStats {
 
-    private long playerId;
+    private Long playerId;
 
     private String name;
 

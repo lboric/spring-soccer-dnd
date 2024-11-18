@@ -63,7 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (18/18)
+    (17/17)
   </span>
 </td>
 </tr>
@@ -83,6 +83,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.stream.Collectors;
 &nbsp;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
 &nbsp;import org.springframework.http.ResponseEntity;
 &nbsp;import org.springframework.web.bind.annotation.DeleteMapping;
 &nbsp;import org.springframework.web.bind.annotation.GetMapping;
@@ -97,6 +98,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.lboric.soccerdnd.models.Player;
 &nbsp;import com.lboric.soccerdnd.services.PlayerService;
 &nbsp;
+&nbsp;import jakarta.validation.Valid;
 &nbsp;import lombok.NonNull;
 &nbsp;
 &nbsp;@RestController
@@ -121,29 +123,31 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    @GetMapping(&quot;/{id}&quot;)
-<b class="fc">&nbsp;    ResponseEntity&lt;PlayerDTO&gt; getPlayerById(@NonNull @PathVariable final Long id) {</b>
+&nbsp;    ResponseEntity&lt;PlayerDTO&gt; getPlayerById(@PathVariable final Long id) {
 <b class="fc">&nbsp;        final PlayerDTO playerDTO = this.playerService.getPlayerById(id).toDTO();</b>
 &nbsp;
 <b class="fc">&nbsp;        return ResponseEntity.ok(playerDTO);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PostMapping(&quot;/add-player&quot;)
-<b class="fc">&nbsp;    ResponseEntity&lt;PlayerDTO&gt; addPlayer(@NonNull @RequestBody final PlayerDTO playerDTO) {</b>
+&nbsp;    @PostMapping(&quot;/add&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerDTO&gt; addPlayer(@NonNull @Valid @RequestBody final PlayerDTO playerDTO) {</b>
 <b class="fc">&nbsp;        final PlayerDTO resultPlayerDTO = this.playerService.addPlayer(playerDTO.toModel()).toDTO();</b>
 &nbsp;
-<b class="fc">&nbsp;        return ResponseEntity.ok(resultPlayerDTO);</b>
+<b class="fc">&nbsp;        return ResponseEntity.status(HttpStatus.CREATED).body(resultPlayerDTO);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PutMapping(&quot;/update-player&quot;)
-<b class="fc">&nbsp;    ResponseEntity&lt;PlayerDTO&gt; updatePlayer(@NonNull @RequestBody final PlayerDTO playerDTO) {</b>
+&nbsp;    @PutMapping(&quot;/update&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerDTO&gt; updatePlayer(@NonNull @Valid @RequestBody final PlayerDTO playerDTO) {</b>
 <b class="fc">&nbsp;        final PlayerDTO resultPlayerDTO = this.playerService.updatePlayer(playerDTO.toModel()).toDTO();</b>
 &nbsp;
 <b class="fc">&nbsp;        return ResponseEntity.ok(resultPlayerDTO);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @DeleteMapping(&quot;/delete-player/{id}&quot;)
-<b class="fc">&nbsp;    void deletePlayer(@NonNull @PathVariable final Long id) {</b>
+&nbsp;    @DeleteMapping(&quot;/delete/{id}&quot;)
+&nbsp;    ResponseEntity&lt;Void&gt; deletePlayer(@PathVariable final Long id) {
 <b class="fc">&nbsp;        this.playerService.deletePlayerById(id);</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.noContent().build();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;}
@@ -170,7 +174,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-17 23:53</div>
+    <div style="float:right;">generated on 2024-11-18 12:29</div>
 </div>
 </body>
 </html>

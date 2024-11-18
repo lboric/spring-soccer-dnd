@@ -79,7 +79,28 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import com.lboric.soccerdnd.models.PlayerStats;
 &nbsp;
-<b class="fc">&nbsp;public record PlayerStatsDTO(long playerId, String name, String surname, int seasonYear, int numberOfGoals) {</b>
+&nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.constraints.Max;
+&nbsp;import jakarta.validation.constraints.Min;
+&nbsp;import jakarta.validation.constraints.NotNull;
+&nbsp;
+<b class="fc">&nbsp;public record PlayerStatsDTO(</b>
+&nbsp;
+&nbsp;    @Nullable
+&nbsp;    Long playerId,
+&nbsp;
+&nbsp;    @NotNull(message = &quot;Name is required.&quot;)
+&nbsp;    String name,
+&nbsp;
+&nbsp;    @NotNull(message = &quot;Surname is required.&quot;)
+&nbsp;    String surname,
+&nbsp;
+&nbsp;    @Min(value = 0, message = &quot;seasonYear must be positive number.&quot;)
+&nbsp;    @Max(value = 2030, message = &quot;Latest allowed year is 2030.&quot;)
+&nbsp;    int seasonYear,
+&nbsp;
+&nbsp;    @Min(value = 0, message = &quot;numberOfGoals must be positive number&quot;)
+&nbsp;    int numberOfGoals) {
 &nbsp;
 &nbsp;    public PlayerStats toModel() {
 <b class="fc">&nbsp;        return PlayerStats.builder()</b>
@@ -115,7 +136,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-17 23:53</div>
+    <div style="float:right;">generated on 2024-11-18 12:29</div>
 </div>
 </body>
 </html>

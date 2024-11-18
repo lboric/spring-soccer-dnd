@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > PlayerService</title>
+  <title>Coverage Report > PlayerStatsService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,25 +22,16 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.lboric.soccerdnd.services</a>
 </div>
 
-<h1>Coverage Summary for Class: PlayerService (com.lboric.soccerdnd.services)</h1>
+<h1>Coverage Summary for Class: PlayerStatsService (com.lboric.soccerdnd.services)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
 </tr>
-  <tr>
-    <td class="name">PlayerService$MockitoMock$7poJVica</td>
-  </tr>
-  <tr>
-    <td class="name">PlayerService$MockitoMock$7poJVica$auxiliary$E7MMyv1S</td>
-  </tr>
-  <tr>
-    <td class="name">PlayerService$MockitoMock$7poJVica$auxiliary$jVrNN5Fh</td>
-  </tr>
 <tr>
-  <td class="name"><strong>Total</strong></td>
+  <td class="name">PlayerStatsService</td>
 </tr>
+
 </table>
 
 <br/>
@@ -52,68 +43,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import java.util.Set;
 &nbsp;
-&nbsp;import com.lboric.soccerdnd.exceptions.PlayerAlreadyExistsException;
-&nbsp;import com.lboric.soccerdnd.exceptions.PlayerNotFoundException;
-&nbsp;import com.lboric.soccerdnd.models.Player;
+&nbsp;import com.lboric.soccerdnd.models.PlayerStats;
 &nbsp;
-&nbsp;/**
-&nbsp; * Interface defining the contract for player-related operations.
-&nbsp; * This service provides methods for retrieving, adding, and updating player data.
-&nbsp; */
-&nbsp;public interface PlayerService {
+&nbsp;public interface PlayerStatsService {
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Retrieves a player by their unique identifier.
-&nbsp;     *
-&nbsp;     * @param id the unique identifier of the player
-&nbsp;     * @return the Player object associated with the given id
-&nbsp;     * @throws PlayerNotFoundException if no player is found with the specified id
-&nbsp;     */
-&nbsp;    Player getPlayerById(Long id) throws PlayerNotFoundException;
+&nbsp;    PlayerStats getPlayerStatsById(Long id);
 &nbsp;
-&nbsp;    Player getPlayerByNameAndSurname(String name, String surname) throws PlayerNotFoundException;
+&nbsp;    Set&lt;PlayerStats&gt; getAllPlayersStats();
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Retrieves all players in the system.
-&nbsp;     *
-&nbsp;     * @return a set of Player objects representing all players
-&nbsp;     */
-&nbsp;    Set&lt;Player&gt; getAllPlayers();
+&nbsp;    PlayerStats addPlayerStats(PlayerStats playerStats);
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Adds a new player to the system.
-&nbsp;     *
-&nbsp;     * @param player the Player object to be added
-&nbsp;     * @return the Player object that was added
-&nbsp;     * @throws PlayerAlreadyExistsException if a player with the same identifier already exists
-&nbsp;     */
-&nbsp;    Player addPlayer(Player player) throws PlayerAlreadyExistsException;
+&nbsp;    PlayerStats updatePlayerStats(PlayerStats playerStats);
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Adds multiple players to the system.
-&nbsp;     *
-&nbsp;     * @param players a set of Player objects to be added
-&nbsp;     * @return a set of Player objects that were added
-&nbsp;     * @throws PlayerAlreadyExistsException if one or more players already exist
-&nbsp;     */
-&nbsp;    Set&lt;Player&gt; addMultiplePlayers(Set&lt;Player&gt; players) throws PlayerAlreadyExistsException;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Updates the information of an existing player.
-&nbsp;     *
-&nbsp;     * @param player the Player object containing updated information
-&nbsp;     * @return the updated Player object
-&nbsp;     * @throws PlayerNotFoundException if the player does not exist
-&nbsp;     */
-&nbsp;    Player updatePlayer(Player player) throws PlayerNotFoundException;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Deletes a player from the system by their unique identifier.
-&nbsp;     *
-&nbsp;     * @param id the unique identifier of the player to be deleted
-&nbsp;     * @throws PlayerNotFoundException if no player is found with the specified id
-&nbsp;     */
-&nbsp;    void deletePlayerById(Long id);
+&nbsp;    void deletePlayerStatsByNameSurnameAndSeasonYear(PlayerStats playerStats);
 &nbsp;
 &nbsp;}
 </code>
@@ -139,7 +81,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-17 23:53</div>
+    <div style="float:right;">generated on 2024-11-18 12:29</div>
 </div>
 </body>
 </html>

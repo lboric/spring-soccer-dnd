@@ -63,7 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (18/18)
+    (19/19)
   </span>
 </td>
 </tr>
@@ -83,6 +83,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.stream.Collectors;
 &nbsp;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
 &nbsp;import org.springframework.http.ResponseEntity;
 &nbsp;import org.springframework.web.bind.annotation.DeleteMapping;
 &nbsp;import org.springframework.web.bind.annotation.GetMapping;
@@ -97,6 +98,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.lboric.soccerdnd.models.PlayerStats;
 &nbsp;import com.lboric.soccerdnd.services.PlayerStatsService;
 &nbsp;
+&nbsp;import jakarta.validation.Valid;
 &nbsp;import lombok.NonNull;
 &nbsp;
 &nbsp;@RestController
@@ -123,29 +125,31 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    @GetMapping(&quot;/{id}&quot;)
-<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; getPlayerStatsByPlayerId(@NonNull @PathVariable final Long id) {</b>
+&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; getPlayerStatsByPlayerId(@PathVariable final Long id) {
 <b class="fc">&nbsp;        final PlayerStatsDTO playerStatsDTO = this.playerStatsService.getPlayerStatsById(id).toDTO();</b>
 &nbsp;
 <b class="fc">&nbsp;        return ResponseEntity.ok(playerStatsDTO);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PostMapping(&quot;/add-player-stats&quot;)
-<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; addPlayerStats(@NonNull @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
+&nbsp;    @PostMapping(&quot;/add&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; addPlayerStats(@NonNull @Valid @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
 <b class="fc">&nbsp;        final PlayerStatsDTO resultPlayerDTO = this.playerStatsService.addPlayerStats(playerStatsDTO.toModel()).toDTO();</b>
 &nbsp;
-<b class="fc">&nbsp;        return ResponseEntity.ok(resultPlayerDTO);</b>
+<b class="fc">&nbsp;        return ResponseEntity.status(HttpStatus.CREATED).body(resultPlayerDTO);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PutMapping(&quot;/update-player-stats&quot;)
-<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; updatePlayerStats(@NonNull @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
+&nbsp;    @PutMapping(&quot;/update&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;PlayerStatsDTO&gt; updatePlayerStats(@NonNull @Valid @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
 <b class="fc">&nbsp;        final PlayerStatsDTO resultPlayerDTO = this.playerStatsService.updatePlayerStats(playerStatsDTO.toModel()).toDTO();</b>
 &nbsp;
 <b class="fc">&nbsp;        return ResponseEntity.ok(resultPlayerDTO);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @DeleteMapping(&quot;/delete-player-stats&quot;)
-&nbsp;    void deletePlayer(@RequestBody final PlayerStatsDTO playerStatsDTO) {
+&nbsp;    @DeleteMapping(&quot;/delete&quot;)
+<b class="fc">&nbsp;    ResponseEntity&lt;Void&gt; deletePlayer(@NonNull @Valid @RequestBody final PlayerStatsDTO playerStatsDTO) {</b>
 <b class="fc">&nbsp;        this.playerStatsService.deletePlayerStatsByNameSurnameAndSeasonYear(playerStatsDTO.toModel());</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.noContent().build();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;}
@@ -172,7 +176,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-17 23:53</div>
+    <div style="float:right;">generated on 2024-11-18 12:29</div>
 </div>
 </body>
 </html>

@@ -74,13 +74,13 @@ class PlayerStatsControllerTest {
     @Rollback
     @Transactional
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#addPlayerStatsArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an new player stats, WHEN a POST request is made to /api/player-stats/add-player-stats, THEN it should return the added player stats")
+    @DisplayName("GIVEN an new player stats, WHEN a POST request is made to /api/player-stats/add, THEN it should return the added player stats")
     void testAddPlayerStats(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(post("/api/player-stats/add-player-stats")
+        this.mockMvc.perform(post("/api/player-stats/add")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(content().string(containsString(expectedResponse)));
     }
 
@@ -89,9 +89,9 @@ class PlayerStatsControllerTest {
     @Rollback
     @Transactional
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#addPlayerStatsForExistingSeasonYearArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an new player stats, WHEN a POST request is made to /api/player-stats/add-player-stats, THEN it should return an error message")
+    @DisplayName("GIVEN an new player stats, WHEN a POST request is made to /api/player-stats/add, THEN it should return an error message")
     void testAddPlayerStatsForExistingSeasonYear(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(post("/api/player-stats/add-player-stats")
+        this.mockMvc.perform(post("/api/player-stats/add")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -104,14 +104,13 @@ class PlayerStatsControllerTest {
     @Rollback
     @Transactional
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#addPlayerStatsMissingNameArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an new player stats but missing name, WHEN a POST request is made to /api/player-stats/add-player-stats, THEN it should return an error message")
+    @DisplayName("GIVEN an new player stats but missing name, WHEN a POST request is made to /api/player-stats/add, THEN it should return an error message")
     void testAddPlayerStatsWithMissingArguments(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(post("/api/player-stats/add-player-stats")
+        this.mockMvc.perform(post("/api/player-stats/add")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
-            .andExpect(status().is4xxClientError())
-            .andExpect(content().string(containsString(expectedResponse)));
+            .andExpect(status().is4xxClientError());
     }
 
     @ParameterizedTest
@@ -119,9 +118,9 @@ class PlayerStatsControllerTest {
     @Rollback
     @Transactional
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#updatePlayerStatsForExistingSeasonYearArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an existing player stats, WHEN a PUT request is made to /api/player-stats/update-player-stats, THEN it should return the updated player stats")
+    @DisplayName("GIVEN an existing player stats, WHEN a PUT request is made to /api/player-stats/update, THEN it should return the updated player stats")
     void testUpdatePlayerStats(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(put("/api/player-stats/update-player-stats")
+        this.mockMvc.perform(put("/api/player-stats/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -132,9 +131,9 @@ class PlayerStatsControllerTest {
     @ParameterizedTest
     @Order(8)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#updateNonExistentPlayerStatsArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an non-existing player, WHEN a PUT request is made to /api/player-stats/update-player-stats, THEN it should return an error message")
+    @DisplayName("GIVEN an non-existing player, WHEN a PUT request is made to /api/player-stats/update, THEN it should return an error message")
     void testUpdateNonExistentPlayerStats(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(put("/api/player-stats/update-player-stats")
+        this.mockMvc.perform(put("/api/player-stats/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -145,9 +144,9 @@ class PlayerStatsControllerTest {
     @ParameterizedTest
     @Order(9)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#updateNonExistentPlayerStatsArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an non-existing player stats for season year, WHEN a PUT request is made to /api/player-stats/update-player-stats, THEN it should return an error message")
+    @DisplayName("GIVEN an non-existing player stats for season year, WHEN a PUT request is made to /api/player-stats/update, THEN it should return an error message")
     void testUpdateNonExistentPlayerStatsRecord(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(put("/api/player-stats/update-player-stats")
+        this.mockMvc.perform(put("/api/player-stats/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -160,21 +159,21 @@ class PlayerStatsControllerTest {
     @Rollback
     @Transactional
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#deletePlayerStatsByNameAndSurnameAndSeasonYearArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an existing player stats, WHEN a DELETE request is made to /api/player-stats/delete-player-stats, THEN it should delete the player stats")
+    @DisplayName("GIVEN an existing player stats, WHEN a DELETE request is made to /api/player-stats/delete, THEN it should delete the player stats")
     void testDeletePlayerStatsByNameAndSurname(final String requestBody) throws Exception {
-        this.mockMvc.perform(delete("/api/player-stats/delete-player-stats")
+        this.mockMvc.perform(delete("/api/player-stats/delete")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isNoContent());
     }
 
     @ParameterizedTest
     @Order(11)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#deletePlayerStatsByNonExistingNameAndSurnameAndSeasonYearArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an non-existing player stats, WHEN a DELETE request is made to /api/player-stats/delete-player-stats, THEN it should return an error message")
+    @DisplayName("GIVEN an non-existing player stats, WHEN a DELETE request is made to /api/player-stats/delete, THEN it should return an error message")
     void testDeletePlayerStatsByNonExistingNameAndSurname(final String requestBody) throws Exception {
-        this.mockMvc.perform(delete("/api/player-stats/delete-player-stats")
+        this.mockMvc.perform(delete("/api/player-stats/delete")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())

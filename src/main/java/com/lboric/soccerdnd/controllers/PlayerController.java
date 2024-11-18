@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import com.lboric.soccerdnd.dtos.PlayerDTO;
 import com.lboric.soccerdnd.models.Player;
 import com.lboric.soccerdnd.services.PlayerService;
 
+import jakarta.validation.Valid;
 import lombok.NonNull;
 
 @RestController
@@ -44,29 +46,31 @@ public class PlayerController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<PlayerDTO> getPlayerById(@NonNull @PathVariable final Long id) {
+    ResponseEntity<PlayerDTO> getPlayerById(@PathVariable final Long id) {
         final PlayerDTO playerDTO = this.playerService.getPlayerById(id).toDTO();
 
         return ResponseEntity.ok(playerDTO);
     }
 
-    @PostMapping("/add-player")
-    ResponseEntity<PlayerDTO> addPlayer(@NonNull @RequestBody final PlayerDTO playerDTO) {
+    @PostMapping("/add")
+    ResponseEntity<PlayerDTO> addPlayer(@NonNull @Valid @RequestBody final PlayerDTO playerDTO) {
         final PlayerDTO resultPlayerDTO = this.playerService.addPlayer(playerDTO.toModel()).toDTO();
 
-        return ResponseEntity.ok(resultPlayerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resultPlayerDTO);
     }
 
-    @PutMapping("/update-player")
-    ResponseEntity<PlayerDTO> updatePlayer(@NonNull @RequestBody final PlayerDTO playerDTO) {
+    @PutMapping("/update")
+    ResponseEntity<PlayerDTO> updatePlayer(@NonNull @Valid @RequestBody final PlayerDTO playerDTO) {
         final PlayerDTO resultPlayerDTO = this.playerService.updatePlayer(playerDTO.toModel()).toDTO();
 
         return ResponseEntity.ok(resultPlayerDTO);
     }
 
-    @DeleteMapping("/delete-player/{id}")
-    void deletePlayer(@NonNull @PathVariable final Long id) {
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<Void> deletePlayer(@PathVariable final Long id) {
         this.playerService.deletePlayerById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
