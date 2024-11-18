@@ -1,0 +1,42 @@
+name: Deploy Javadocs to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]  # Trigger on push to the main branch
+  workflow_dispatch:  # Allows you to manually trigger this workflow
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: javadocs  # Use your custom environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Copy Javadocs to /javadocs folder
+        run: |
+          mkdir -p javadocs
+          cp -r docs/* javadocs/
+
+      - name: Upload Javadocs
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'javadocs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
