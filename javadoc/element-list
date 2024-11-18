@@ -1,0 +1,13 @@
+com.lboric.soccerdnd
+com.lboric.soccerdnd.controllers
+com.lboric.soccerdnd.dtos
+com.lboric.soccerdnd.entities
+com.lboric.soccerdnd.exceptions
+com.lboric.soccerdnd.integration
+com.lboric.soccerdnd.models
+com.lboric.soccerdnd.repositories
+com.lboric.soccerdnd.services
+com.lboric.soccerdnd.services.impl
+com.lboric.soccerdnd.unit.repositories
+com.lboric.soccerdnd.unit.services
+com.lboric.soccerdnd.utils
