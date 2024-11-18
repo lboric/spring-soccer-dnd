@@ -3,7 +3,7 @@
 ![spring-soccer-dnd_small](https://github.com/user-attachments/assets/da79f9a3-34b8-4096-bb98-81d48bfa8bb7)
 <br/><br/>
 
-**Soccer DnD Player Stats Management System**, designed to manage and track players' performance statistics over multiple seasons. The app provides RESTful APIs for handling players and their season-specific stats, offering seamless CRUD operations, robust validation, and detailed exception handling.
+A Soccer Player Stats Management System built with Spring Boot to efficiently track player performance over multiple seasons.
 
 ---
 
