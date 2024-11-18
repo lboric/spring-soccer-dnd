@@ -74,22 +74,22 @@ class PlayerControllerTest {
     @Rollback
     @Transactional
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#addPlayerArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an new player, WHEN a POST request is made to /api/players/add-player, THEN it should return the added player")
+    @DisplayName("GIVEN an new player, WHEN a POST request is made to /api/players/add, THEN it should return the added player")
     void testAddPlayer(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(post("/api/players/add-player")
+        this.mockMvc.perform(post("/api/players/add")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(content().string(containsString(expectedResponse)));
     }
 
     @ParameterizedTest
     @Order(5)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#addPlayerButItAlreadyExistsArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an existing player, WHEN a POST request is made to /api/players/add-player, THEN it should return an error message")
+    @DisplayName("GIVEN an existing player, WHEN a POST request is made to /api/players/add, THEN it should return an error message")
     void testAddPlayerButItAlreadyExists(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(post("/api/players/add-player")
+        this.mockMvc.perform(post("/api/players/add")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -100,9 +100,9 @@ class PlayerControllerTest {
     @ParameterizedTest
     @Order(6)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#updatePlayerArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an existing player, WHEN a PUT request is made to /api/players/update-player, THEN it should return the updated player")
+    @DisplayName("GIVEN an existing player, WHEN a PUT request is made to /api/players/update, THEN it should return the updated player")
     void testUpdatePlayer(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(put("/api/players/update-player")
+        this.mockMvc.perform(put("/api/players/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -113,9 +113,9 @@ class PlayerControllerTest {
     @ParameterizedTest
     @Order(7)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#updatePlayerWhichDoesntExistArgumentSetAndExpectedResultSet")
-    @DisplayName("GIVEN an non-existing player, WHEN a PUT request is made to /api/players/update-player, THEN it should return an error message")
+    @DisplayName("GIVEN an non-existing player, WHEN a PUT request is made to /api/players/update, THEN it should return an error message")
     void testUpdatePlayerWhichDoesntExist(final String requestBody, final String expectedResponse) throws Exception {
-        this.mockMvc.perform(put("/api/players/update-player")
+        this.mockMvc.perform(put("/api/players/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(requestBody))
             .andDo(print())
@@ -126,11 +126,11 @@ class PlayerControllerTest {
     @ParameterizedTest
     @Order(8)
     @MethodSource("com.lboric.soccerdnd.utils.ControllerTestUtils#deletePlayerByIdArgumentSet")
-    @DisplayName("GIVEN an existing player, WHEN a DELETE request is made to /api/players/delete-player, THEN it should delete the player")
+    @DisplayName("GIVEN an existing player, WHEN a DELETE request is made to /api/players/delete, THEN it should delete the player")
     void testDeletePlayer(final String id) throws Exception {
-        this.mockMvc.perform(delete("/api/players/delete-player/" + id))
+        this.mockMvc.perform(delete("/api/players/delete/" + id))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isNoContent());
     }
 
 }

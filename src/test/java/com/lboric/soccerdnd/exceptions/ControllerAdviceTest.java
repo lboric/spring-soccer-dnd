@@ -36,8 +36,7 @@ class ControllerAdviceTest {
     void testCallNonExistingAPIEndpoint() throws Exception {
         this.mockMvc.perform(get("/api/non-existing"))
             .andDo(print())
-            .andExpect(status().isNotFound())
-            .andExpect(content().string(containsString("API endpoint doesn't exist.")));
+            .andExpect(status().isNotFound());
     }
 
     @Test

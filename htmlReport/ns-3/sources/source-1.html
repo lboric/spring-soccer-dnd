@@ -80,8 +80,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.lboric.soccerdnd.models.Player;
 &nbsp;
 &nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.constraints.NotNull;
 &nbsp;
-<b class="fc">&nbsp;public record PlayerDTO(@Nullable Long id, String name, String surname) {</b>
+<b class="fc">&nbsp;public record PlayerDTO(</b>
+&nbsp;
+&nbsp;    @Nullable
+&nbsp;    Long id,
+&nbsp;
+&nbsp;    @NotNull(message = &quot;Name is required.&quot;)
+&nbsp;    String name,
+&nbsp;
+&nbsp;    @NotNull(message = &quot;Surname is required.&quot;)
+&nbsp;    String surname) {
 &nbsp;
 &nbsp;    public Player toModel() {
 <b class="fc">&nbsp;        return Player.builder()</b>
@@ -115,7 +125,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-17 23:53</div>
+    <div style="float:right;">generated on 2024-11-18 12:29</div>
 </div>
 </body>
 </html>

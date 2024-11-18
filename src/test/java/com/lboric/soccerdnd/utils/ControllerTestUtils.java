@@ -146,15 +146,15 @@ public class ControllerTestUtils {
     static Stream<Arguments> updatePlayerStatsForExistingSeasonYearArgumentSetAndExpectedResultSet() {
         return Stream.of(
             Arguments.of(
-                "{\"playerId\": \"1\", \"seasonYear\": \"2024\", \"numberOfGoals\": \"55\"}",
+              "{\"playerId\":1,\"name\":\"test\",\"surname\":\"player1\",\"seasonYear\":2024,\"numberOfGoals\":55}",
                 "{\"playerId\":1,\"name\":\"test\",\"surname\":\"player1\",\"seasonYear\":2024,\"numberOfGoals\":55}"
             ),
             Arguments.of(
-                "{\"playerId\": \"2\", \"seasonYear\": \"2024\", \"numberOfGoals\": \"45\"}",
+              "{\"playerId\":2,\"name\":\"test\",\"surname\":\"player2\",\"seasonYear\":2024,\"numberOfGoals\":45}",
                 "{\"playerId\":2,\"name\":\"test\",\"surname\":\"player2\",\"seasonYear\":2024,\"numberOfGoals\":45}"
             ),
             Arguments.of(
-                "{\"playerId\": \"3\", \"seasonYear\": \"2024\", \"numberOfGoals\": \"35\"}",
+              "{\"playerId\":3,\"name\":\"test\",\"surname\":\"player3\",\"seasonYear\":2024,\"numberOfGoals\":35}",
                 "{\"playerId\":3,\"name\":\"test\",\"surname\":\"player3\",\"seasonYear\":2024,\"numberOfGoals\":35}"
             )
         );
@@ -163,7 +163,7 @@ public class ControllerTestUtils {
     static Stream<Arguments> updateNonExistentPlayerStatsArgumentSetAndExpectedResultSet() {
         return Stream.of(
         Arguments.of(
-            "{\"playerId\": \"4\", \"seasonYear\": \"2024\", \"numberOfGoals\": \"55\"}",
+          "{\"playerId\":4,\"name\":\"test\",\"surname\":\"player4\",\"seasonYear\":2024,\"numberOfGoals\":55}",
             "Player with id: 4 not found."
         )
         );

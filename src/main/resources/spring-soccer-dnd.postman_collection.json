@@ -30,7 +30,7 @@
 							"raw": "{\r\n    \"name\": \"Filip\",\r\n    \"surname\": \"Borić\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/players/add-player",
+							"raw": "http://localhost:8080/api/players/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -39,7 +39,7 @@
 							"path": [
 								"api",
 								"players",
-								"add-player"
+								"add"
 							]
 						}
 					},
@@ -66,7 +66,7 @@
 							"raw": "{\r\n    \"id\": 4,\r\n    \"name\": \"Riki\",\r\n    \"surname\": \"Borić\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/players/update-player",
+							"raw": "http://localhost:8080/api/players/update",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -75,7 +75,7 @@
 							"path": [
 								"api",
 								"players",
-								"update-player"
+								"update"
 							]
 						}
 					},
@@ -87,7 +87,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/players/delete-player/1",
+							"raw": "http://localhost:8080/api/players/delete/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -96,7 +96,7 @@
 							"path": [
 								"api",
 								"players",
-								"delete-player",
+								"delete",
 								"1"
 							]
 						}
@@ -162,10 +162,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"playerId\": \"1\",\r\n    \"seasonYear\": \"2024\",\r\n    \"numberOfGoals\": \"55\"\r\n}"
+							"raw": "{\r\n    \"playerId\": \"4\",\r\n    \"name\": \"Luka\",\r\n    \"surname\": \"Boric\",\r\n    \"seasonYear\": \"2024\",\r\n    \"numberOfGoals\": \"55\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/player-stats/update-player-stats",
+							"raw": "http://localhost:8080/api/player-stats/update",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -174,7 +174,7 @@
 							"path": [
 								"api",
 								"player-stats",
-								"update-player-stats"
+								"update"
 							]
 						}
 					},
@@ -201,7 +201,7 @@
 							"raw": "{\r\n    \"name\": \"Luka\",\r\n    \"surname\": \"Boric\",\r\n    \"seasonYear\": \"2025\",\r\n    \"numberOfGoals\": \"34\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/player-stats/add-player-stats",
+							"raw": "http://localhost:8080/api/player-stats/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -210,7 +210,7 @@
 							"path": [
 								"api",
 								"player-stats",
-								"add-player-stats"
+								"add"
 							]
 						}
 					},
@@ -234,10 +234,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Luka\",\r\n    \"surname\": \"Boric\",\r\n    \"seasonYear\": \"2025\"\r\n}"
+							"raw": "{\r\n    \"name\": \"Luka\",\r\n    \"surname\": \"Boric\",\r\n    \"seasonYear\": \"2024\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/player-stats/delete-player-stats",
+							"raw": "http://localhost:8080/api/player-stats/delete",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -246,7 +246,7 @@
 							"path": [
 								"api",
 								"player-stats",
-								"delete-player-stats"
+								"delete"
 							]
 						}
 					},

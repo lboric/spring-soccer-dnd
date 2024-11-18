@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import com.lboric.soccerdnd.dtos.PlayerStatsDTO;
 import com.lboric.soccerdnd.models.PlayerStats;
 import com.lboric.soccerdnd.services.PlayerStatsService;
 
+import jakarta.validation.Valid;
 import lombok.NonNull;
 
 @RestController
@@ -46,29 +48,31 @@ public class PlayerStatsController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<PlayerStatsDTO> getPlayerStatsByPlayerId(@NonNull @PathVariable final Long id) {
+    ResponseEntity<PlayerStatsDTO> getPlayerStatsByPlayerId(@PathVariable final Long id) {
         final PlayerStatsDTO playerStatsDTO = this.playerStatsService.getPlayerStatsById(id).toDTO();
 
         return ResponseEntity.ok(playerStatsDTO);
     }
 
-    @PostMapping("/add-player-stats")
-    ResponseEntity<PlayerStatsDTO> addPlayerStats(@NonNull @RequestBody final PlayerStatsDTO playerStatsDTO) {
+    @PostMapping("/add")
+    ResponseEntity<PlayerStatsDTO> addPlayerStats(@NonNull @Valid @RequestBody final PlayerStatsDTO playerStatsDTO) {
         final PlayerStatsDTO resultPlayerDTO = this.playerStatsService.addPlayerStats(playerStatsDTO.toModel()).toDTO();
 
-        return ResponseEntity.ok(resultPlayerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resultPlayerDTO);
     }
 
-    @PutMapping("/update-player-stats")
-    ResponseEntity<PlayerStatsDTO> updatePlayerStats(@NonNull @RequestBody final PlayerStatsDTO playerStatsDTO) {
+    @PutMapping("/update")
+    ResponseEntity<PlayerStatsDTO> updatePlayerStats(@NonNull @Valid @RequestBody final PlayerStatsDTO playerStatsDTO) {
         final PlayerStatsDTO resultPlayerDTO = this.playerStatsService.updatePlayerStats(playerStatsDTO.toModel()).toDTO();
 
         return ResponseEntity.ok(resultPlayerDTO);
     }
 
-    @DeleteMapping("/delete-player-stats")
-    void deletePlayer(@RequestBody final PlayerStatsDTO playerStatsDTO) {
+    @DeleteMapping("/delete")
+    ResponseEntity<Void> deletePlayer(@NonNull @Valid @RequestBody final PlayerStatsDTO playerStatsDTO) {
         this.playerStatsService.deletePlayerStatsByNameSurnameAndSeasonYear(playerStatsDTO.toModel());
+
+        return ResponseEntity.noContent().build();
     }
 
 }

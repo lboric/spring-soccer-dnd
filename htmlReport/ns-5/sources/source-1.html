@@ -55,7 +55,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (8/8)
+    (6/6)
   </span>
 </td>
 <td class="coverageStat">
@@ -63,7 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (8/8)
+    (6/6)
   </span>
 </td>
 </tr>
@@ -81,10 +81,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import org.springframework.http.ResponseEntity;
 &nbsp;import org.springframework.web.bind.annotation.ControllerAdvice;
 &nbsp;import org.springframework.web.bind.annotation.ExceptionHandler;
-&nbsp;import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-&nbsp;import org.springframework.web.servlet.resource.NoResourceFoundException;
 &nbsp;
-&nbsp;@ControllerAdvice
+&nbsp;@ControllerAdvice(basePackages = &quot;com.lboric.soccerdnd&quot;)
 <b class="fc">&nbsp;public class GlobalExceptionHandler {</b>
 &nbsp;
 &nbsp;    @ExceptionHandler(PlayerNotFoundException.class)
@@ -112,16 +110,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;An unexpected error occurred.&quot;);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @ExceptionHandler(NoResourceFoundException.class)
-&nbsp;    public ResponseEntity&lt;String&gt; handleNoResourceFoundException() {
-<b class="fc">&nbsp;        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;API endpoint doesn&#39;t exist.&quot;);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @ExceptionHandler({MethodArgumentTypeMismatchException.class, IllegalArgumentException.class})
-&nbsp;    public ResponseEntity&lt;String&gt; handleBadArgumentException() {
-<b class="fc">&nbsp;        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(&quot;Bad request - Argument mismatch or invalid arguments&quot;);</b>
-&nbsp;    }
-&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -146,7 +134,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-11-17 23:53</div>
+    <div style="float:right;">generated on 2024-11-18 12:29</div>
 </div>
 </body>
 </html>
