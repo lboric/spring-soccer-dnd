@@ -70,7 +70,7 @@ A Soccer Player Stats Management System built with Spring Boot to efficiently tr
 
 You can view the generated Javadoc for this project at the following link:
 
-[Javadoc Documentation](https://lboric.github.io/spring-soccer-dnd/)
+[Javadoc Documentation](https://lboric.github.io/spring-soccer-dnd/javadocs)
 
 ---
 
@@ -85,6 +85,9 @@ You can view the generated Javadoc for this project at the following link:
 ---
 
 <h2>Overall Coverage Summary </h2>
+
+[Coverage Report](https://lboric.github.io/spring-soccer-dnd/testcoverage)
+
 <table class="coverageStats">
   <tr>
     <th class="name">Package</th>
