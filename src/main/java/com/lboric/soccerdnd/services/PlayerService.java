@@ -21,6 +21,14 @@ public interface PlayerService {
      */
     Player getPlayerById(Long id) throws PlayerNotFoundException;
 
+    /**
+     * Retrieves a player by their name and surname.
+     *
+     * @param name the name of the player
+     * @param surname the surname of the player
+     * @return the Player object associated with the given name and surname
+     * @throws PlayerNotFoundException if no player is found with the specified name and surname
+     */
     Player getPlayerByNameAndSurname(String name, String surname) throws PlayerNotFoundException;
 
     /**

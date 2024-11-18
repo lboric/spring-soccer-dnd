@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.lboric.soccerdnd.dtos.PlayerStatsDTO;
 import com.lboric.soccerdnd.entities.PlayerEntity;
 import com.lboric.soccerdnd.entities.PlayerStatsEntity;
+import com.lboric.soccerdnd.exceptions.PlayerAlreadyExistsException;
 import com.lboric.soccerdnd.exceptions.PlayerNotFoundException;
 import com.lboric.soccerdnd.exceptions.PlayerStatsAlreadyExistsException;
 import com.lboric.soccerdnd.exceptions.PlayerStatsNotFoundException;
@@ -21,6 +22,40 @@ import com.lboric.soccerdnd.utils.ValidationUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation of the {@link PlayerStatsService} interface that handles operations related to PlayerStats entities.
+ * This service provides methods for retrieving, adding, updating, and deleting player statistics.
+ *
+ * <p>
+ * It interacts with the {@link PlayerStatsRepository} and {@link PlayerService} to perform database operations
+ * and utilizes custom exceptions to handle specific error scenarios.
+ * </p>
+ *
+ * <p>
+ * Supported operations:
+ * <ul>
+ *   <li>Retrieve statistics for a single player by their ID.</li>
+ *   <li>Retrieve statistics for all players.</li>
+ *   <li>Add new statistics for a player.</li>
+ *   <li>Update existing statistics for a player.</li>
+ *   <li>Delete statistics for a player based on their name, surname, and season year.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Exceptions handled:
+ * <ul>
+ *   <li>{@link PlayerNotFoundException} - if the player does not exist.</li>
+ *   <li>{@link PlayerStatsNotFoundException} - if the statistics for the player are not found.</li>
+ *   <li>{@link PlayerStatsAlreadyExistsException} - if statistics for the player already exist.</li>
+ *   <li>{@link IllegalArgumentException} - if the provided input is invalid.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * This class also includes logging to capture significant actions and errors, aiding in debugging and operational monitoring.
+ * </p>
+ */
 @Slf4j
 @Service
 public class PlayerStatsServiceImpl implements PlayerStatsService {
@@ -35,9 +70,12 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
         this.playerService = playerService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PlayerStats getPlayerStatsById(final Long id) throws PlayerNotFoundException {
-        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+        if (ValidationUtils.checkIfPlayerIsMissingID(id)) throw new PlayerNotFoundException("Player ID is missing or invalid. Please provide a valid existing player ID.");
 
         return this.playerStatsRepository.findPlayerStatsById(id).map(PlayerStatsDTO::toModel)
         .orElseThrow(() -> {
@@ -49,6 +87,9 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<PlayerStats> getAllPlayersStats() {
         return this.playerStatsRepository.findAllPlayerStats()
@@ -58,9 +99,12 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
             .orElseGet(Collections::emptySet);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public PlayerStats addPlayerStats(final PlayerStats playerStats) {
-        if (ValidationUtils.checkIfPlayerStatsIsMissingPlayerNameOrSurname(playerStats)) throw new IllegalArgumentException("You must provide player name and surname.");
+    public PlayerStats addPlayerStats(final PlayerStats playerStats) throws IllegalArgumentException, PlayerAlreadyExistsException {
+        if (ValidationUtils.checkIfPlayerStatsIsMissingPlayerNameOrSurname(playerStats)) throw new IllegalArgumentException("Player ID is missing or invalid. Please provide a valid existing player ID.");
 
         final PlayerEntity playerEntity = this.playerService.getPlayerByNameAndSurname(playerStats.getName(), playerStats.getSurname()).toEntity();
 
@@ -78,11 +122,14 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
         return this.playerStatsRepository.save(playerStats.toEntity(playerEntity)).toModel();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public PlayerStats updatePlayerStats(final PlayerStats playerStats) throws PlayerStatsNotFoundException {
+    public PlayerStats updatePlayerStats(final PlayerStats playerStats) throws PlayerStatsNotFoundException, PlayerNotFoundException {
         final Long playerId = playerStats.getPlayerId();
 
-        if (ValidationUtils.checkIfPlayerIsMissingID(playerId)) throw new PlayerNotFoundException("You must provide an existing player ID.");
+        if (ValidationUtils.checkIfPlayerIsMissingID(playerId)) throw new PlayerNotFoundException("Player ID is missing or invalid. Please provide a valid existing player ID.");
 
         final PlayerEntity playerEntity = this.playerService.getPlayerById(playerId).toEntity();
         final PlayerStatsEntity existingStats = this.playerStatsRepository
@@ -100,9 +147,13 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
         return this.playerStatsRepository.save(existingStats).toModel();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void deletePlayerStatsByNameSurnameAndSeasonYear(final PlayerStats playerStats) {
-        if (ValidationUtils.checkIfPlayerStatsIsMissingPlayerNameOrSurnameOrSeasonYear(playerStats)) throw new IllegalArgumentException("You must provide player name, surname and season year.");
+    public void deletePlayerStatsByNameSurnameAndSeasonYear(final PlayerStats playerStats) throws IllegalArgumentException, PlayerNotFoundException {
+        if (ValidationUtils.checkIfPlayerStatsIsMissingPlayerNameOrSurnameOrSeasonYear(playerStats)) throw new IllegalArgumentException("Player name, surname, or season year is missing or invalid. Please provide valid parameters.");
+
 
         final String name = playerStats.getName();
         final String surname = playerStats.getSurname();
@@ -118,7 +169,7 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
 
         this.playerStatsRepository.deleteByNameAndSurnameAndSeasonYear(name, surname, seasonYear);
 
-        log.info("Deleted stats for player '{}' {} in season {}", name, surname, seasonYear);
+        log.info("Successfully deleted stats for player '{}' {} in season {} from repository.", name, surname, seasonYear);
     }
 
 }
