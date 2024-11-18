@@ -108,7 +108,7 @@
     100%
   </span>
   <span class="absValue">
-    (67/67)
+    (65/65)
   </span>
 </td>
 <td class="coverageStat">
@@ -116,7 +116,7 @@
     100%
   </span>
   <span class="absValue">
-    (181/181)
+    (179/179)
   </span>
 </td>
   </tr>
@@ -266,7 +266,7 @@
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (10/10)
   </span>
 </td>
 <td class="coverageStat">
@@ -274,7 +274,7 @@
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (10/10)
   </span>
 </td>
   </tr>
