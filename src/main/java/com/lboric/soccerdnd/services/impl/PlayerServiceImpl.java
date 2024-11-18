@@ -27,23 +27,21 @@ import lombok.extern.slf4j.Slf4j;
  * <p>
  * The following operations are supported:
  * <ul>
- *   <li>Retrieve a single player by their ID.</li>
+ *   <li>Retrieve a single player by their ID or name and surname.</li>
  *   <li>Retrieve all players.</li>
- *   <li>Add a new player to the repository.</li>
- *   <li>Add multiple players in one operation.</li>
+ *   <li>Add a new player or multiple players to the repository.</li>
  *   <li>Update an existing player's information.</li>
+ *   <li>Delete a player by their ID.</li>
  * </ul>
  * </p>
  *
  * <p>
- * Each method throws specific exceptions such as {@link PlayerNotFoundException}
- * and {@link PlayerAlreadyExistsException} to indicate failure scenarios,
- * ensuring clear communication of issues to the calling layers.
+ * Each method throws specific exceptions, such as {@link PlayerNotFoundException} and {@link PlayerAlreadyExistsException},
+ * to indicate failure scenarios and ensure clear communication of issues to the calling layers.
  * </p>
  *
  * <p>
- * This class also contains logging for important actions and errors, aiding in debugging and
- * operational monitoring.
+ * This class also logs significant actions and errors, aiding in debugging and operational monitoring.
  * </p>
  */
 @Slf4j
@@ -75,6 +73,9 @@ public class PlayerServiceImpl implements PlayerService {
             });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Player getPlayerByNameAndSurname(final String name, final String surname) throws PlayerNotFoundException {
         return this.playerRepository.findByNameAndSurname(name, surname)
