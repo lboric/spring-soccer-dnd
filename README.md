@@ -51,16 +51,16 @@
 ### Player Endpoints:
 - `GET /api/players` - Fetch all players.
 - `GET /api/players/{id}` - Fetch a player by ID.
-- `POST /api/players/add-player` - Add a new player.
-- `PUT /api/players/update-player` - Update player stats.
-- `DELETE /api/players/delete-player/{id}` - Delete a player.
+- `POST /api/players/add` - Add a new player.
+- `PUT /api/players/update` - Update player stats.
+- `DELETE /api/players/delete/{id}` - Delete a player.
 
 ### Player Stats Endpoints:
 - `GET /api/player-stats` - Retrieve all player stats.
 - `GET /api/player-stats/{playerId}` - Retrieve stats for a specific player.
-- `POST /api/player-stats/add-player-stats` - Add player stats.
-- `PUT /api/player-stats/update-player-stats` - Update player stats.
-- `DELETE /api/player-stats/delete-player-stats` - Delete stats by player and season year.
+- `POST /api/player-stats/add` - Add player stats.
+- `PUT /api/player-stats/update` - Update player stats.
+- `DELETE /api/player-stats/delete` - Delete stats by player and season year.
 
 [Download the Postman Collection](https://github.com/lboric/spring-soccer-dnd/blob/main/src/main/resources/spring-soccer-dnd.postman_collection.json)
 
